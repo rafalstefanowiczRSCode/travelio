@@ -1,0 +1,21 @@
+const visitedCountries = [
+  "MX",
+  "TH",
+  "ID",
+  "PH",
+  "MY",
+  "KH",
+  "TN",
+  "TZ",
+  "ES",
+  "PT",
+  "IT",
+  "NL",
+  "BE",
+  "GB",
+  "DK",
+  "PL",
+  "CZ",
+  "HR",
+];
+export default visitedCountries;

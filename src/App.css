@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.vectorMap {
+  height: 100vh;
+  padding: 20px;
+  background-color: #3d85c6;
+}
+
+.plane {
+  z-index: 1;
+  position: fixed;
+  left: -40px;
+  top: 50vh;
+  width: 40px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: 3s;
+  background-color: transparent;
+}
+
+.jvectormap-tip {
+  font-size: 12px;
+  padding: 3px 6px;
+}
+
+.jvectormap-zoomout {
+  display: none;
+}
+.jvectormap-zoomin {
+  display: none;
+}
