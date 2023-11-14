@@ -17,5 +17,6 @@ const visitedCountries = [
   "PL",
   "CZ",
   "HR",
+  "GR",
 ];
 export default visitedCountries;
