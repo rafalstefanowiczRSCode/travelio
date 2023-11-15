@@ -1,9 +1,13 @@
-import transition from "../../transition";
+import transition from "../transition";
+import { useParams, Link } from "react-router-dom";
 
 const Country = () => {
+  const { country } = useParams();
+
   return (
     <div>
-      <h1>Country</h1>
+      <h1>{country}</h1>
+      <Link to="/">Map</Link>
     </div>
   );
 };
