@@ -7,7 +7,7 @@ const Country = () => {
   return (
     <div>
       <h1>{country}</h1>
-      <Link to="/">Map</Link>
+      <Link to={`/?search=${country}`}>Map</Link>
     </div>
   );
 };

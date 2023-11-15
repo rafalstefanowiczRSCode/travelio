@@ -1,19 +1,25 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
+import { useSearchParams } from "react-router-dom";
 import TravelHeader from "../components/TravelHeader";
 import plane from "../icons/plane.svg";
 import Globe from "../components/Globe";
 import mapReducer from "../reducers/mapReducer";
 import { countryList } from "../utils.js/countryList";
 import { selectCountryAction } from "../reducers/mapReducer";
-import { useLocation } from "react-router-dom";
 
 const Map = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [state, action] = useReducer(mapReducer, {
-    inputValue: "",
+    inputValue: searchParams.get("search") || "",
     showDropdown: false,
     filteredCountryList: countryList,
   });
+
+  useEffect(() => {
+    if (state.inputValue) setSearchParams({ search: state.inputValue });
+  }, [state.inputValue, setSearchParams]);
+
   const onCountryClick = (country) => {
     action(selectCountryAction(country));
   };

@@ -1,18 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
 
 import visitedCountries from "../constants/visitedCountries";
 import { countryList, countryNames } from "../utils.js/countryList";
+import { debounce } from "../utils.js/debounce";
 
 const Globe = ({ onCountryClick, selectedCountry }) => {
+  const isInitialMount = useRef(true);
+
+  // move plane while selectedCountry changed
   useEffect(() => {
     if (countryList.find((country) => selectedCountry === country)) {
-      movePlaneOnRegionClick(countryNames[selectedCountry]);
+      movePlane(countryNames[selectedCountry], isInitialMount.current);
     }
+
+    isInitialMount.current = false;
   }, [selectedCountry]);
 
-  const movePlaneOnRegionClick = (code) => {
+  // move plane when user resize page
+  useEffect(() => {
+    const resizeListener = debounce(() => {
+      movePlane(countryNames[selectedCountry]);
+    }, 250);
+
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, [selectedCountry]);
+
+  const movePlane = (code, firstMount) => {
     const countryEl = [
       ...document.querySelectorAll(`[data-code="${code}"]`),
     ][0];
@@ -44,31 +63,40 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
 
     // Hack for the US, as it spans the entire width of the map.
     if (code === "US") {
-      newLeftPlanePosition = countryDimensions.width / 4.2 + "px";
+      const canadaDimensions = [
+        ...document.querySelectorAll(`[data-code="CA"]`),
+      ][0].getBoundingClientRect();
+
+      newLeftPlanePosition =
+        canadaDimensions.left + canadaDimensions.width / 2 + "px";
       newTopPlanePosition =
         countryDimensions.top + (countryDimensions.height * 2) / 3 + "px";
     }
 
     // rotate the plane if it's needed
+    let planeTransition = "";
+    let planeTransform = "";
     if (
       parseInt(currentPlaneStyle.left) > parseInt(newLeftPlanePosition) &&
       angle > 0
     ) {
-      planeImg.style.transition =
-        "transform 1s ease, left 3s ease 1s,  top 3s ease 1s";
-      planeImg.style.transform = "translate(-50%, -50%) rotate(-135deg)";
+      planeTransition = "transform 1s ease, left 3s ease 1s, top 3s ease 1s";
+      planeTransform = "translate(-50%, -50%) rotate(-135deg)";
     } else if (
       parseInt(currentPlaneStyle.left) < parseInt(newLeftPlanePosition) &&
       angle < 0
     ) {
-      planeImg.style.transition =
-        "transform 1 ease, left 3s ease 1s, top 3s ease 1s";
-      planeImg.style.transform = "translate(-50%, -50%) rotate(45deg)";
+      planeTransition = "transform 1 ease, left 3s ease 1s, top 3s ease 1s";
+      planeTransform = "translate(-50%, -50%) rotate(45deg)";
     } else {
-      planeImg.style.transition = "left 3s ease, top 3s ease";
+      planeTransition = "left 3s ease, top 3s ease";
+      planeTransform = "translate(-50%, -50%) rotate(45deg);";
     }
+    if (firstMount) planeTransition = "none";
 
-    // set the new plane direction
+    // set the new plane position
+    planeImg.style.transition = planeTransition;
+    planeImg.style.transform = planeTransform;
     planeImg.style.top = newTopPlanePosition;
     planeImg.style.left = newLeftPlanePosition;
   };
