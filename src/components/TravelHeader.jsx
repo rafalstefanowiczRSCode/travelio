@@ -7,7 +7,7 @@ import {
   updateShowDropdownAction,
 } from "../reducers/mapReducer";
 
-const TravelHeader = ({ state, action, onCountryClick }) => {
+const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   const dropdownWrapperRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -46,7 +46,7 @@ const TravelHeader = ({ state, action, onCountryClick }) => {
   const handleButtonClick = () => {
     navigate(state.inputValue);
   };
-
+  console.log(selectedCountry);
   return (
     <div className="travelHeader">
       <h3>Travel anywhere you want</h3>
@@ -62,7 +62,7 @@ const TravelHeader = ({ state, action, onCountryClick }) => {
         />
         {state.showDropdown && <div className="dropdown">{countryMap}</div>}
       </div>
-      <button onClick={handleButtonClick}>
+      <button disabled={!selectedCountry} onClick={handleButtonClick}>
         Visit
         <FaPlaneArrival className="buttonIcon" />
       </button>

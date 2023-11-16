@@ -3,7 +3,7 @@ import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
 
 import visitedCountries from "../constants/visitedCountries";
-import { countryList, countryNames } from "../utils.js/countryList";
+import { countryNames } from "../utils.js/countryList";
 import { debounce } from "../utils.js/debounce";
 
 const Globe = ({ onCountryClick, selectedCountry }) => {
@@ -11,21 +11,20 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
 
   // move plane while selectedCountry changed
   useEffect(() => {
-    if (countryList.find((country) => selectedCountry === country)) {
-      movePlane(countryNames[selectedCountry], isInitialMount.current);
-    }
+    if (!selectedCountry) return;
+    movePlane(countryNames[selectedCountry], isInitialMount.current);
 
     isInitialMount.current = false;
   }, [selectedCountry]);
 
   // move plane when user resize page
   useEffect(() => {
+    if (!selectedCountry) return;
     const resizeListener = debounce(() => {
       movePlane(countryNames[selectedCountry]);
-    }, 250);
+    }, 150);
 
     window.addEventListener("resize", resizeListener);
-
     return () => {
       window.removeEventListener("resize", resizeListener);
     };

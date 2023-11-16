@@ -131,7 +131,6 @@
 .travelHeader button {
   height: 100%;
   padding: 6px;
-  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,6 +140,19 @@
   border-radius: 10px;
   border: none;
   font-weight: 600;
+  transition: 0.3s;
+}
+
+.travelHeader button:disabled {
+  cursor: default;
+}
+
+.travelHeader button:enabled:hover {
+  background-color: #3d85c6;
+}
+
+.travelHeader button:active {
+  transform: scale(0.98);
 }
 
 .travelHeader .buttonIcon {

@@ -17,7 +17,12 @@ const Map = () => {
   });
 
   useEffect(() => {
-    if (state.inputValue) setSearchParams({ search: state.inputValue });
+    const inputValue = state.inputValue;
+    if (countryList.find((country) => inputValue === country)) {
+      setSearchParams({ search: inputValue });
+    } else {
+      setSearchParams({});
+    }
   }, [state.inputValue, setSearchParams]);
 
   const onCountryClick = (country) => {
@@ -31,10 +36,11 @@ const Map = () => {
         state={state}
         action={action}
         onCountryClick={onCountryClick}
+        selectedCountry={searchParams.get("search")}
       />
       <Globe
         onCountryClick={onCountryClick}
-        selectedCountry={state.inputValue}
+        selectedCountry={searchParams.get("search")}
       />
     </>
   );
