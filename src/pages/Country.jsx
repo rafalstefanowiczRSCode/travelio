@@ -1,13 +1,14 @@
 import transition from "../transition";
-import { useParams, Link } from "react-router-dom";
+import CountryInfo from "./CountryInfo";
+import CountryBack from "../components/CountryBack";
+import CountryImages from "./CountryImages";
 
 const Country = () => {
-  const { country } = useParams();
-
   return (
     <div>
-      <h1>{country}</h1>
-      <Link to={`/?search=${country}`}>Map</Link>
+      <CountryBack />
+      <CountryInfo />
+      <CountryImages />
     </div>
   );
 };
