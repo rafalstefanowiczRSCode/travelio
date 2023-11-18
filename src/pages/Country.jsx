@@ -1,7 +1,7 @@
 import transition from "../transition";
-import CountryInfo from "./CountryInfo";
+import CountryInfo from "../components/CountryInfo";
 import CountryBack from "../components/CountryBack";
-import CountryImages from "./CountryImages";
+import CountryImages from "../components/CountryImages";
 
 const Country = () => {
   return (
