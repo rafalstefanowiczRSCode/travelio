@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
 
@@ -13,6 +13,22 @@ const CountryImages = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const gridRef = useRef(null);
+  const observer = useRef();
+
+  const lastBookElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        //to do retrieve has more from db
+        if (entries[0].isIntersecting && "hasMore") {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,9 +46,14 @@ const CountryImages = () => {
     if (data.length < page * 10) fetchData();
   }, [country, page]);
 
-  const mapPhotos = data.map((item) => {
+  const mapPhotos = data.map((item, id) => {
     return (
-      <div className="grid-item" key={item.id} style={{ width: "33.3333%" }}>
+      <div
+        ref={id + 1 === data.length ? lastBookElementRef : null}
+        className="grid-item"
+        key={item.id}
+        style={{ width: "33.3333%" }}
+      >
         <img
           src={item.urls.regular}
           alt={item.alt_description}
@@ -53,6 +74,10 @@ const CountryImages = () => {
     const imgLoad = imagesLoaded(gridRef.current);
 
     const onLoad = (elements) => {
+      setIsLoading(true);
+      document.querySelectorAll(".grid .photo").forEach((el) => {
+        el.style.visibility = "visible";
+      });
       if (!masonry.current) {
         masonry.current = new Masonry(gridRef.current, {
           itemSelector: ".grid-item",

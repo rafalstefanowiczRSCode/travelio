@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 const CountryInfo = () => {
   const { country } = useParams();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +14,7 @@ const CountryInfo = () => {
           `https://restcountries.com/v3.1/name/${country}`
         );
         const data = await response.json();
+        if (data.message) throw Error(data.message);
         setData(data[0]);
       } catch (err) {
         setError(err);
@@ -27,6 +28,11 @@ const CountryInfo = () => {
 
   if (isLoading) {
     return <h1>Loading</h1>;
+  }
+
+  if (error) {
+    console.log(error);
+    return <h1>error</h1>;
   }
   return (
     <div style={{ display: "flex" }}>
