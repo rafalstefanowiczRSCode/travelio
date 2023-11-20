@@ -1,24 +1,25 @@
 import { useParams, Link } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
-import Masonry from "react-masonry-css";
-//move acces key to env
+import Masonry from "masonry-layout";
+import imagesLoaded from "imagesloaded";
 
-const getApiUrl = (search) =>
-  `https://api.unsplash.com/search/photos?client_id=EnHPWht5jugnt3faJ0V2-BgTXGy_n2m-iqaOuaprGMg&page=1&query=${search}`;
+const getApiUrl = (search, page) =>
+  `https://api.unsplash.com/search/photos?client_id=EnHPWht5jugnt3faJ0V2-BgTXGy_n2m-iqaOuaprGMg&page=${page}&query=${search}`;
 
 const CountryImages = () => {
   const { country } = useParams();
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const gridRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(getApiUrl(country));
+        const response = await fetch(getApiUrl(country, page));
         const data = await response.json();
-        console.log(data);
-        setData(data.results);
+        setData((prevData) => [...prevData, ...data.results]);
       } catch (err) {
         setError(err);
       } finally {
@@ -26,28 +27,18 @@ const CountryImages = () => {
       }
     };
 
-    fetchData();
-  }, [country]);
+    if (data.length < page * 10) fetchData();
+  }, [country, page]);
 
-  console.log(data);
-  console.log(error);
-  console.log(isLoading);
-
-  // if (data.length) {
-  //   console.log("download ?? ", data[0].links.download);
-  //   console.log("download ?? ", data[0].links.download);
-  //   console.log("show full on zoom", data[0].urls.regular);
-  // }
-
-  console.log(data);
   const mapPhotos = data.map((item) => {
     return (
-      <div className="grid-item" key={item.id} style={{ width: "300px" }}>
+      <div className="grid-item" key={item.id} style={{ width: "33.3333%" }}>
         <img
           src={item.urls.regular}
           alt={item.alt_description}
           className="photo"
         ></img>
+
         {/* <h3>{`${item.user.first_name} ${item.user.last_name}`}</h3>
         <img src={item.user.profile_image.medium}></img>
         <p>{item.description}</p> */}
@@ -55,99 +46,50 @@ const CountryImages = () => {
     );
   });
 
+  const masonry = useRef(null);
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const imgLoad = imagesLoaded(gridRef.current);
+
+    const onLoad = (elements) => {
+      if (!masonry.current) {
+        masonry.current = new Masonry(gridRef.current, {
+          itemSelector: ".grid-item",
+          columnWidth: ".grid-item",
+          percentPosition: true,
+          transitionDuration: 0,
+        });
+      } else {
+        masonry.current.reloadItems();
+        masonry.current.layout();
+      }
+    };
+
+    //progress - layout every single image load  / always- layout when all images  has been loaded
+    imgLoad.on("always", onLoad);
+    return () => {
+      imgLoad.off("always", onLoad);
+    };
+  });
+
   if (isLoading) {
     return <h1>Loading</h1>;
   }
   return (
     <>
-      <Masonry
-        breakpointCols={3}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
+      <div ref={gridRef} className="grid">
         {mapPhotos}
-      </Masonry>
+      </div>
+      <button
+        onClick={() => {
+          setPage((prevPage) => prevPage + 1);
+        }}
+      >
+        fetch more
+      </button>
     </>
   );
 };
 
 export default CountryImages;
-
-// import { useParams, Link } from "react-router-dom";
-// import React, { useEffect, useState, useRef } from "react";
-// import Masonry from "masonry-layout";
-
-// //move acces key to env
-// // const getApiUrl = (search) =>
-// //   `https://api.unsplash.com/photos/?client_id=EnHPWht5jugnt3faJ0V2-BgTXGy_n2m-iqaOuaprGMg`;
-// const getApiUrl = (search) =>
-//   `https://api.unsplash.com/search/photos?client_id=EnHPWht5jugnt3faJ0V2-BgTXGy_n2m-iqaOuaprGMg&page=1&query=${search}`;
-
-// const CountryImages = () => {
-//   const { country } = useParams();
-//   const [data, setData] = useState([]);
-//   const [error, setError] = useState(null);
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch(getApiUrl(country));
-//         const data = await response.json();
-//         console.log(data);
-//         setData(data.results);
-//       } catch (err) {
-//         setError(err);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, [country]);
-
-//   console.log(data);
-//   console.log(error);
-//   console.log(isLoading);
-
-//   // if (data.length) {
-//   //   console.log("download ?? ", data[0].links.download);
-//   //   console.log("download ?? ", data[0].links.download);
-//   //   console.log("show full on zoom", data[0].urls.regular);
-//   // }
-//   const gridRef = useRef(null);
-
-//   useEffect(() => {
-//     new Masonry(gridRef.current, {
-//       // options...
-//       itemSelector: ".grid-item",
-//       columnWidth: 300,
-//     });
-//   }, [data]);
-
-//   const mapPhotos = data.map((item) => {
-//     return (
-//       <div className="grid-item" key={item.id} style={{ width: "300px" }}>
-//         <img
-//           src={item.urls.regular}
-//           alt={item.alt_description}
-//           className="photo"
-//         ></img>
-//         {/* <h3>{`${item.user.first_name} ${item.user.last_name}`}</h3>
-//         <img src={item.user.profile_image.medium}></img>
-//         <p>{item.description}</p> */}
-//       </div>
-//     );
-//   });
-
-//   if (isLoading) {
-//     return <h1>Loading</h1>;
-//   }
-//   return (
-//     <div ref={gridRef} className="grid">
-//       {mapPhotos}
-//     </div>
-//   );
-// };
-
-// export default CountryImages;

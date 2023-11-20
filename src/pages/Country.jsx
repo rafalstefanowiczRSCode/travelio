@@ -5,7 +5,7 @@ import CountryImages from "../components/CountryImages";
 
 const Country = () => {
   return (
-    <div>
+    <div className="countryPage">
       <CountryBack />
       <CountryInfo />
       <CountryImages />

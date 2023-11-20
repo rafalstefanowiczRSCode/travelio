@@ -160,8 +160,19 @@
   font-size: 16px;
 }
 
+.countryPage {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
 .photo {
   width: 100%;
+  visibility: hidden;
+  padding: 10px;
+}
+
+.grid-item {
+  break-inside: avoid;
 }
 
 .my-masonry-grid {

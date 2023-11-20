@@ -46,7 +46,6 @@ const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   const handleButtonClick = () => {
     navigate(state.inputValue);
   };
-  console.log(selectedCountry);
   return (
     <div className="travelHeader">
       <h3>Travel anywhere you want</h3>

@@ -25,10 +25,6 @@ const CountryInfo = () => {
     fetchData();
   }, [country]);
 
-  console.log(data);
-  console.log(error);
-  console.log(isLoading);
-
   if (isLoading) {
     return <h1>Loading</h1>;
   }
