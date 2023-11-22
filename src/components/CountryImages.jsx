@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
@@ -8,74 +8,62 @@ const getApiUrl = (search, page) =>
 
 const CountryImages = () => {
   const { country } = useParams();
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
-  const gridRef = useRef(null);
-  const observer = useRef();
+  const [totalPages, setTotalPages] = useState(1);
 
-  const lastBookElementRef = useCallback(
-    (node) => {
-      if (isLoading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        //to do retrieve has more from db
-        if (entries[0].isIntersecting && "hasMore") {
-          setPage((prevPage) => prevPage + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isLoading]
-  );
+  const fetchImages = async () => {
+    if (isLoading) return;
+    if (totalPages < page) return;
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(getApiUrl(country, page));
+      const data = await response.json();
+      setTotalPages(data.total_pages);
+      setImages((prevImages) => [...prevImages, ...data.results]);
+      setPage(page + 1);
+      setError("");
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(getApiUrl(country, page));
-        const data = await response.json();
-        setData((prevData) => [...prevData, ...data.results]);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
+    fetchImages();
+  }, []);
+
+  const observer = useRef(null);
+  useEffect(() => {
+    return () => {
+      observer.current && observer.current.disconnect();
     };
+  }, []);
 
-    if (data.length < page * 10) fetchData();
-  }, [country, page]);
+  const lastBookElementRef = (node) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !error) {
+        console.log("intersection observer fires");
+        fetchImages();
+      }
+    });
+    if (node) observer.current.observe(node);
+  };
 
-  const mapPhotos = data.map((item, id) => {
-    return (
-      <div
-        ref={id + 1 === data.length ? lastBookElementRef : null}
-        className="grid-item"
-        key={item.id}
-        style={{ width: "33.3333%" }}
-      >
-        <img
-          src={item.urls.regular}
-          alt={item.alt_description}
-          className="photo"
-        ></img>
-
-        {/* <h3>{`${item.user.first_name} ${item.user.last_name}`}</h3>
-        <img src={item.user.profile_image.medium}></img>
-        <p>{item.description}</p> */}
-      </div>
-    );
-  });
-
+  const gridRef = useRef(null);
   const masonry = useRef(null);
 
   useEffect(() => {
-    if (!gridRef.current) return;
+    if (!gridRef.current && !images.length) return;
     const imgLoad = imagesLoaded(gridRef.current);
 
-    const onLoad = (elements) => {
-      setIsLoading(true);
-      document.querySelectorAll(".grid .photo").forEach((el) => {
+    const onLoad = () => {
+      const photosEl = document.querySelectorAll(".grid .photo");
+      photosEl.forEach((el) => {
         el.style.visibility = "visible";
       });
       if (!masonry.current) {
@@ -89,30 +77,69 @@ const CountryImages = () => {
         masonry.current.reloadItems();
         masonry.current.layout();
       }
+      console.log("onLoad");
+      setIsLoading(false);
     };
 
-    //progress - layout every single image load  / always- layout when all images  has been loaded
+    // progress - layout every single image load  / always- layout when all images  has been loaded
     imgLoad.on("always", onLoad);
     return () => {
       imgLoad.off("always", onLoad);
     };
+  }, [images.length]);
+
+  const mapPhotos = images.map((item, id) => {
+    return (
+      <div
+        ref={id + 1 === images.length && !isLoading ? lastBookElementRef : null}
+        className="grid-item"
+        key={item.id}
+      >
+        <div className="photoContainer">
+          <img
+            src={item.urls.regular}
+            alt={item.alt_description}
+            className="photo"
+          ></img>
+          <div className="photoDetails">
+            <img src={item.user.profile_image.medium}></img>
+            <p className="photoAuthorName">
+              {item.user.first_name} {item.user.last_name}
+            </p>
+            {/* <p>{item.description}</p> */}
+          </div>
+        </div>
+      </div>
+    );
   });
 
-  if (isLoading) {
-    return <h1>Loading</h1>;
+  // to do
+  if (error && !error.includes("Rate Limit Exceeded")) {
+    return <h1>Error</h1>;
   }
+
   return (
     <>
       <div ref={gridRef} className="grid">
         {mapPhotos}
       </div>
-      <button
-        onClick={() => {
-          setPage((prevPage) => prevPage + 1);
-        }}
-      >
-        fetch more
-      </button>
+
+      <div>
+        {error.includes("Rate Limit Exceeded") && (
+          <div>
+            <h1>Rate Limit Exceeded</h1>
+
+            <button
+              onClick={() => {
+                fetchImages();
+              }}
+            >
+              Try again
+            </button>
+          </div>
+        )}
+      </div>
+      {isLoading && <h1>Loading</h1>}
     </>
   );
 };

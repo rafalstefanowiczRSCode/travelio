@@ -162,35 +162,71 @@
 }
 
 .countryPage {
-  max-width: 1600px;
+  max-width: 1380px;
   margin: 0 auto;
+  padding: 0px 24px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  width: 33%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .grid-item {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .grid-item {
+    width: 100%;
+  }
+}
+
+.photoContainer {
+  margin: 6px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .photo {
   width: 100%;
+  display: block;
   visibility: hidden;
-  padding: 10px;
 }
 
-.grid-item {
-  break-inside: avoid;
+.photo:hover {
+  cursor: pointer;
 }
 
-.my-masonry-grid {
-  display: -webkit-box; /* Not needed if autoprefixing */
-  display: -ms-flexbox; /* Not needed if autoprefixing */
+.photoDetails {
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
   display: flex;
-  margin-left: -30px; /* gutter size offset */
-  width: auto;
-}
-.my-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
-  background-clip: padding-box;
+  align-items: center;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: 0.3s;
 }
 
-/* Style your items */
-.my-masonry-grid_column > div {
-  /* change div to reference your elements you put in <Masonry> */
-  background: grey;
-  margin-bottom: 30px;
+.photoContainer:hover .photoDetails {
+  bottom: 0px;
+}
+
+.photoDetails img {
+  width: 40px;
+  border-radius: 20px;
+}
+.photoAuthorName {
+  margin-left: 8px;
+  font-size: 14px;
+  color: white;
 }
