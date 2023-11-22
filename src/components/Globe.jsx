@@ -11,8 +11,9 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
 
   // move plane while selectedCountry changed
   useEffect(() => {
-    if (!selectedCountry) return;
-    movePlane(countryNames[selectedCountry], isInitialMount.current);
+    if (selectedCountry) {
+      movePlane(countryNames[selectedCountry], isInitialMount.current === true);
+    }
 
     isInitialMount.current = false;
   }, [selectedCountry]);
