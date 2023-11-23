@@ -25,6 +25,14 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.map {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #3d85c6;
+}
+
 .vectorMap {
   padding: 20px;
   background-color: #3d85c6;
@@ -58,28 +66,32 @@
 }
 
 .travelHeader {
-  height: 32px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  margin: 20px;
+  color: #333;
+  padding: 20px;
+  background-color: white;
+}
+
+.travelHeader .greetings {
+  font-size: 18px;
 }
 
 .dropdownWrapper {
   position: relative;
   width: 200px;
+  margin: 0 6px;
 }
 
 .travelHeader input {
   height: 32px;
+  width: 100%;
   padding: 6px;
   border-radius: 3px;
-  width: 100%;
-  transition: 4s;
-  border: 2px solid;
-  border-color: #888;
+  border: 2px solid #888;
   outline: none;
-  transition: 0.4s;
+  font-size: 14px;
 }
 
 .travelHeader input:focus {
@@ -96,8 +108,8 @@
   width: 100%;
   margin-top: 5px;
   cursor: pointer;
-  /* border: 2px solid #888;
-  border-radius: 3px; */
+  border: 1px solid #888;
+  border-radius: 5px;
 }
 
 .travelHeader .dropdownItem {
@@ -130,18 +142,17 @@
 }
 
 .travelHeader button {
-  height: 100%;
-  padding: 6px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  cursor: pointer;
+  height: 100%;
+  padding: 6px 10px;
+  border-top-right-radius: 44px;
+  border-bottom-right-radius: 44px;
+  border: none;
   color: white;
   background-color: #555;
-  border-radius: 10px;
-  border: none;
   font-weight: 600;
-  transition: 0.3s;
+  cursor: pointer;
 }
 
 .travelHeader button:disabled {
@@ -149,7 +160,11 @@
 }
 
 .travelHeader button:enabled:hover {
-  background-color: #3d85c6;
+  width: 100px;
+}
+
+.travelHeader button:enabled:hover .buttonIcon {
+  margin-left: 32px;
 }
 
 .travelHeader button:active {
@@ -159,6 +174,7 @@
 .travelHeader .buttonIcon {
   margin-left: 6px;
   font-size: 16px;
+  transition: 0.3s linear;
 }
 
 .countryPage {

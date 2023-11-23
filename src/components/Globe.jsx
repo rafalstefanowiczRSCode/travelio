@@ -35,6 +35,7 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
     const countryEl = [
       ...document.querySelectorAll(`[data-code="${code}"]`),
     ][0];
+    if (!countryEl) return;
 
     const countryDimensions = countryEl.getBoundingClientRect();
     const planeImg = document.getElementsByClassName("plane")[0];
@@ -105,7 +106,7 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
     <VectorMap
       className={"vectorMap"}
       backgroundColor="transparent"
-      style={{ height: "80vh" }}
+      style={{ height: "80%" }}
       zoomOnScroll={false}
       // todo
       onRegionTipShow={(_, label) => {

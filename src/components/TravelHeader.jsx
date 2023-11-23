@@ -48,7 +48,7 @@ const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   };
   return (
     <div className="travelHeader">
-      <h3>Travel anywhere you want</h3>
+      <h3 className="greetings">Pick your destination</h3>
       <div ref={dropdownWrapperRef} className="dropdownWrapper">
         <input
           ref={inputRef}

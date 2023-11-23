@@ -30,7 +30,7 @@ const Map = () => {
   };
 
   return (
-    <>
+    <div className="map">
       <img src={plane} alt="plane" className="plane" />
       <TravelHeader
         state={state}
@@ -42,7 +42,7 @@ const Map = () => {
         onCountryClick={onCountryClick}
         selectedCountry={searchParams.get("search")}
       />
-    </>
+    </div>
   );
 };
 
