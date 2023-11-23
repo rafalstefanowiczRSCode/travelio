@@ -1,0 +1,31 @@
+.countryInfo {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  background-color: rgb(242, 242, 242);
+}
+
+.countryInfo .mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.countryInfo .flag {
+  width: 100px;
+}
+
+.countryInfo .name {
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.countryInfo .detailHeader {
+  font-weight: 900;
+}
+
+.detailsContainer {
+  font-size: 12px;
+}

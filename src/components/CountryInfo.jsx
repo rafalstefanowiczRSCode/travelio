@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CountryDetails from "./CountryDetails";
+import "../../styles/countryInfo.css";
 
 const CountryInfo = () => {
   const { country } = useParams();
@@ -11,7 +13,7 @@ const CountryInfo = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://restcountries.com/v3.1/name/${country}`
+          `https://restcountries.com/v3.1/name/${country}?fullText=true`
         );
         const data = await response.json();
         if (data.message) throw Error(data.message);
@@ -35,12 +37,19 @@ const CountryInfo = () => {
     return <h1>error</h1>;
   }
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        <img src={data.flags.svg} alt="flag" style={{ width: "150px" }}></img>
-        <h1>{data.name.common}</h1>
+    <div className="countryInfo">
+      <div className="mainContainer">
+        <img className="flag" src={data.flags.svg} alt="flag"></img>
+        <h1 className="name">{data.name.common}</h1>
       </div>
-      <div></div>
+      <div>
+        <CountryDetails
+          capital={data.capital[0]}
+          languages={Object.values(data.languages)}
+          currencies={Object.values(data.currencies).map(({ name }) => name)}
+          population={data.population}
+        />
+      </div>
     </div>
   );
 };
