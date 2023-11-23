@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CountryDetails from "./CountryDetails";
+import CountryBack from "../components/CountryBack";
 import "../../styles/countryInfo.css";
 
 const CountryInfo = () => {
@@ -38,6 +39,7 @@ const CountryInfo = () => {
   }
   return (
     <div className="countryInfo">
+      <CountryBack />
       <div className="mainContainer">
         <img className="flag" src={data.flags.svg} alt="flag"></img>
         <h1 className="name">{data.name.common}</h1>

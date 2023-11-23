@@ -6,7 +6,6 @@ const CountryDetails = ({
   currencies = [],
   population = "",
 }) => {
-  console.log(currencies);
   const language = languages.slice(0, 3).join(", ");
   const currency = currencies.slice(0, 3).join(", ");
 

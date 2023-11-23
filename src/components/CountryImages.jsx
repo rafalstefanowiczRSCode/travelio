@@ -47,7 +47,6 @@ const CountryImages = () => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !error) {
-        console.log("intersection observer fires");
         fetchImages();
       }
     });
@@ -77,7 +76,6 @@ const CountryImages = () => {
         masonry.current.reloadItems();
         masonry.current.layout();
       }
-      console.log("onLoad");
       setIsLoading(false);
     };
 
