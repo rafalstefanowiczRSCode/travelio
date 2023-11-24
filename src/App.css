@@ -159,12 +159,8 @@
   cursor: default;
 }
 
-.travelHeader button:enabled:hover {
-  width: 100px;
-}
-
 .travelHeader button:enabled:hover .buttonIcon {
-  margin-left: 32px;
+  margin-left: 26px;
 }
 
 .travelHeader button:active {
@@ -190,7 +186,7 @@
 }
 
 .grid-item {
-  width: 33%;
+  width: 33.3333%;
 }
 
 @media only screen and (max-width: 1024px) {
