@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CountryDetails from "./CountryDetails";
-import CountryBack from "../components/CountryBack";
 import "../../styles/countryInfo.css";
 
 const CountryInfo = () => {
@@ -33,13 +32,14 @@ const CountryInfo = () => {
     return <h1>Loading</h1>;
   }
 
+  //to do navigation while error
+  // show back button while error?
   if (error) {
     console.log(error);
     return <h1>error</h1>;
   }
   return (
     <div className="countryInfo">
-      <CountryBack />
       <div className="mainContainer">
         <img className="flag" src={data.flags.svg} alt="flag"></img>
         <h1 className="name">{data.name.common}</h1>

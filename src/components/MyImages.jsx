@@ -52,7 +52,7 @@ const MyImages = () => {
 
   const mapImages = images.map((image, id) => {
     const cldImage = cld.image(image.public_id);
-    cldImage.quality("auto").format("auto");
+    // cldImage.quality("auto").format("auto");
     // .effect("e_sharpen"); //to do check different effects
     //to do remove styles to separate folder
     return (
