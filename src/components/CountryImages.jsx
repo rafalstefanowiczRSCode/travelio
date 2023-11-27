@@ -37,11 +37,6 @@ const CountryImages = () => {
   }, []);
 
   const observer = useRef(null);
-  useEffect(() => {
-    return () => {
-      observer.current && observer.current.disconnect();
-    };
-  }, []);
 
   const lastBookElementRef = (node) => {
     if (observer.current) observer.current.disconnect();

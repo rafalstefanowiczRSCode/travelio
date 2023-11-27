@@ -9,7 +9,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Map />,
-    // errorElement: <Error />,  /todo
+    // errorElement: <Error />,  /to do
   },
   {
     path: "/:country",
