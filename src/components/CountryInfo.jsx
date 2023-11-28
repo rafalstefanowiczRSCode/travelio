@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CountryDetails from "./CountryDetails";
-import "../../styles/countryInfo.css";
+import "../styles/countryInfo.css";
 
 const CountryInfo = () => {
   const { country } = useParams();

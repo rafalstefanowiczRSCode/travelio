@@ -1,0 +1,20 @@
+.myImages {
+  display: flex;
+  flex-wrap: wrap;
+  position: "relative";
+}
+
+.myImages .containerImage {
+  padding: 6px;
+  width: 33.3333%;
+}
+
+.myImages .image {
+  width: 100%;
+  border-radius: 8px;
+  visibility: hidden;
+}
+
+.myImages .imageLoaded {
+  visibility: visible;
+}

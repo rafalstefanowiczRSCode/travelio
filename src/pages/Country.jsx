@@ -10,7 +10,7 @@ const Country = () => {
       <CountryBack />
       <CountryInfo />
       <MyImages />
-      <CountryImages />
+      {/* <CountryImages /> */}
     </div>
   );
 };

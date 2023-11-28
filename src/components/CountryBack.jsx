@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
-import "../../styles/countryBack.css";
+import "../styles/countryBack.css";
 
 const CountryBack = () => {
   const { country } = useParams();
