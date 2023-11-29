@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "./Image";
-import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 import { useParams } from "react-router-dom";
 import "../styles/myImages.css";
 import Masonry from "masonry-layout";
@@ -56,13 +55,15 @@ const MyImages = () => {
   const masonry = useRef(null);
 
   useEffect(() => {
-    const onLoad = (instance, image) => {
-      if (image.isLoaded) image.img.classList.add("imageLoaded");
+    const onLoad = (instance) => {
+      instance.images.forEach((image) => {
+        image.img.classList.add("imageLoaded");
+      });
 
       if (!masonry.current) {
         masonry.current = new Masonry(gridRef.current, {
-          itemSelector: ".myImages .containerImage:has(.imageLoaded)",
-          columnWidth: ".myImages .containerImage:has(.imageLoaded)",
+          itemSelector: ".myImages .containerImage",
+          columnWidth: ".myImages .containerImage",
           percentPosition: true,
           transitionDuration: 0,
         });
@@ -79,9 +80,9 @@ const MyImages = () => {
 
     if (!gridRef.current) return;
     const imgLoad = imagesLoaded(gridRef.current);
-    imgLoad.on("progress", onLoad);
+    imgLoad.on("always", onLoad);
     return () => {
-      imgLoad.off("progress", onLoad);
+      imgLoad.off("always", onLoad);
     };
   }, [images]);
 
