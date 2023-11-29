@@ -1,6 +1,8 @@
 import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 import React from "react";
 
+import "../styles/image.css";
+
 const Image = ({
   containerRef,
   containerClass,
@@ -10,18 +12,21 @@ const Image = ({
   isAdvancedImage,
 }) => {
   return (
-    <div ref={containerRef} className={containerClass}>
-      {isAdvancedImage ? (
-        <AdvancedImage
-          className={imageClass}
-          style={imageStyle}
-          cldImg={cldImage}
-          plugins={[placeholder({ mode: "blur" })]}
-        />
-      ) : (
-        <img></img>
-      )}
-    </div>
+    <button ref={containerRef} className={containerClass}>
+      <div className="imageAndDetailsContainer">
+        {isAdvancedImage ? (
+          <AdvancedImage
+            className={imageClass}
+            style={imageStyle}
+            cldImg={cldImage}
+            plugins={[placeholder({ mode: "blur" })]}
+          />
+        ) : (
+          <img></img>
+        )}
+        <div className="imageDetails"></div>
+      </div>
+    </button>
   );
 };
 

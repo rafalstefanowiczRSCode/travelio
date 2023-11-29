@@ -5,14 +5,15 @@
 }
 
 .myImages .containerImage {
-  padding: 6px;
   width: 33.3333%;
+  background-color: transparent;
+  border: none;
 }
 
 .myImages .image {
   width: 100%;
-  border-radius: 8px;
   visibility: hidden;
+  display: block;
 }
 
 .myImages .imageLoaded {
