@@ -8,13 +8,13 @@ import imagesLoaded from "imagesloaded";
 
 const cloudName = "dduk3mqt0";
 const MyImages = () => {
+  const { country } = useParams();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const { country } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   const imagePerPage = 6;
   const images = data.slice(0, page * imagePerPage);
   const lastPage = page * imagePerPage >= data.length;
-  const [isLoading, setIsLoading] = useState(true);
 
   const cld = new Cloudinary({
     cloud: {
@@ -55,6 +55,7 @@ const MyImages = () => {
   const masonry = useRef(null);
 
   useEffect(() => {
+    if (!images.length) return;
     const onLoad = (instance) => {
       instance.images.forEach((image) => {
         image.img.classList.add("imageLoaded");
@@ -84,7 +85,7 @@ const MyImages = () => {
     return () => {
       imgLoad.off("always", onLoad);
     };
-  }, [images]);
+  }, [images.length]);
 
   const mapImages = images.map((image, id) => {
     const cldImage = cld.image(image.public_id);
