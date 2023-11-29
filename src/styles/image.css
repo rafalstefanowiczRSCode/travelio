@@ -3,7 +3,7 @@
   margin: 6px;
   border-radius: 20px;
   overflow: hidden;
-  cursor: pointer;
+  cursor: zoom-in;
 }
 
 .imageDetails {
@@ -13,11 +13,30 @@
   height: 60px;
   display: flex;
   align-items: center;
-  padding: 8px;
+  justify-content: space-between;
+  padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0.7);
   transition: 0.3s;
+  color: white;
+  font-size: 16px;
 }
 
 .imageAndDetailsContainer:hover .imageDetails {
   bottom: 0px;
+}
+
+.downloadButton {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+}
+
+.downloadIcon {
+  font-size: 18px;
 }

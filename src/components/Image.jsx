@@ -1,5 +1,6 @@
 import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 import React from "react";
+import { IoMdDownload } from "react-icons/io";
 
 import "../styles/image.css";
 
@@ -10,9 +11,11 @@ const Image = ({
   imageStyle,
   cldImage,
   isAdvancedImage,
+  children,
+  handleDownload,
 }) => {
   return (
-    <button ref={containerRef} className={containerClass}>
+    <div ref={containerRef} className={containerClass}>
       <div className="imageAndDetailsContainer">
         {isAdvancedImage ? (
           <AdvancedImage
@@ -24,9 +27,14 @@ const Image = ({
         ) : (
           <img></img>
         )}
-        <div className="imageDetails"></div>
+        <div className="imageDetails">
+          {children}
+          <button className="downloadButton" onClick={handleDownload}>
+            <IoMdDownload className="downloadIcon" />
+          </button>
+        </div>
       </div>
-    </button>
+    </div>
   );
 };
 

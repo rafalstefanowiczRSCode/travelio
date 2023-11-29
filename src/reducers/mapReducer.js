@@ -4,7 +4,7 @@ const ACTION_TYPES = {
   updateShowDropdown: "UPDATE_SHOW_DROPDOWN",
 };
 
-import { countryList, filterCountryList } from "../utils.js/countryList";
+import { countryList, filterCountryList } from "../utils/countryList";
 
 const mapReducer = (state, action) => {
   switch (action.type) {

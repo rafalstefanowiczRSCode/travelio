@@ -3,8 +3,8 @@ import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
 
 import visitedCountries from "../constants/visitedCountries";
-import { countryNames } from "../utils.js/countryList";
-import { debounce } from "../utils.js/debounce";
+import { countryNames } from "../utils/countryList";
+import { debounce } from "../utils/debounce";
 
 const Globe = ({ onCountryClick, selectedCountry }) => {
   const isInitialMount = useRef(true);

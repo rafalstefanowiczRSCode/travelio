@@ -19,3 +19,7 @@
 .myImages .imageLoaded {
   visibility: visible;
 }
+
+.myImages .imageDescription {
+  font-weight: 700;
+}

@@ -2,9 +2,19 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "./Image";
 import { useParams } from "react-router-dom";
-import "../styles/myImages.css";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
+import "../styles/myImages.css";
+import imageDownload from "../utils/imageDownload";
+
+//to to   - create function to show the details
+function removeBeforeSlash(str) {
+  const slashIndex = str.indexOf("/");
+  if (slashIndex === -1) {
+    return str; // Return the original string if no slash is found
+  }
+  return str.substring(slashIndex + 1);
+}
 
 const cloudName = "dduk3mqt0";
 const MyImages = () => {
@@ -104,7 +114,10 @@ const MyImages = () => {
         containerClass="containerImage"
         cldImage={cldImage}
         isAdvancedImage
-      />
+        handleDownload={() => imageDownload(cldImage.toURL(), image.public_id)}
+      >
+        <p className="imageDescription">{removeBeforeSlash(image.public_id)}</p>
+      </Image>
     );
   });
 

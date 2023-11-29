@@ -5,7 +5,7 @@ import TravelHeader from "../components/TravelHeader";
 import plane from "../icons/plane.svg";
 import Globe from "../components/Globe";
 import mapReducer from "../reducers/mapReducer";
-import { countryList } from "../utils.js/countryList";
+import { countryList } from "../utils/countryList";
 import { selectCountryAction } from "../reducers/mapReducer";
 
 const Map = () => {
