@@ -4,9 +4,10 @@
   justify-content: center;
   padding: 6px;
   border: none;
+  outline: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
   background-color: rgba(0, 0, 0, 0.4);
 }
 

@@ -23,7 +23,7 @@ const Slider = ({
     setTimeout(() => {
       prevButtonRef.current.classList.remove("simulatePreviousButtonActive");
       prevButtonRef.current.click();
-    }, 200);
+    }, 100);
   };
 
   const onRightArrowClick = () => {
@@ -33,7 +33,7 @@ const Slider = ({
     setTimeout(() => {
       nextButtonRef.current.classList.remove("simulateNextButtonActive");
       nextButtonRef.current.click();
-    }, 200);
+    }, 100);
   };
 
   const onExitClick = () => {
@@ -43,7 +43,7 @@ const Slider = ({
     setTimeout(() => {
       closeButtonRef.current.classList.remove("simulateCloseButtonActive");
       closeButtonRef.current.click();
-    }, 200);
+    }, 100);
   };
 
   useEffect(() => {
