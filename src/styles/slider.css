@@ -1,9 +1,42 @@
 .slider {
   height: 100%;
-  padding: 20px 20px;
+  padding: 20px 80px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .sliderImage {
-  height: 100%;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.sliderCloseButton {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+.sliderCloseButton:active {
+  transform: scale(0.98);
+}
+
+.sliderPreviousButton {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sliderPreviousButton:active {
+  left: 16px;
+}
+
+.sliderNextButton {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sliderNextButton:active {
+  right: 16px;
 }

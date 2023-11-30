@@ -25,7 +25,7 @@ const MyImages = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isSliderOpen, setIsSliderOpen] = useState(false);
-  const [currentImg, setCurrentImg] = useState(false);
+  const [currentImg, setCurrentImg] = useState(null);
 
   const imagePerPage = 6;
   const images = data.slice(0, page * imagePerPage);
@@ -107,6 +107,24 @@ const MyImages = () => {
     setCurrentImg(currentImg);
   };
 
+  const onNextImgClick = () => {
+    setCurrentImg((currentImg) => {
+      if (currentImg + 1 === images.length) return 0;
+      return currentImg + 1;
+    });
+  };
+
+  const onPreviousImgClick = () => {
+    setCurrentImg((currentImg) => {
+      if (currentImg === 0) return images.length - 1;
+      return currentImg - 1;
+    });
+  };
+
+  const onCloseSliderClick = () => {
+    setIsSliderOpen(false);
+  };
+
   const mapImages = images.map((image, id) => {
     const cldImage = cld.image(image.public_id);
     // cldImage.quality("auto").format("auto");
@@ -125,7 +143,7 @@ const MyImages = () => {
         cldImage={cldImage}
         isAdvancedImage
         onImageClick={() => {
-          onImageClick(cldImage);
+          onImageClick(id);
         }}
         handleDownload={() => imageDownload(cldImage.toURL(), image.public_id)}
       >
@@ -142,7 +160,12 @@ const MyImages = () => {
       {isLoading && <h1>loading....</h1>}
       {isSliderOpen && (
         <Portal>
-          <Slider cldImage={currentImg} />
+          <Slider
+            cldImage={cld.image(images[currentImg].public_id)}
+            handleClose={onCloseSliderClick}
+            onNextImgClick={onNextImgClick}
+            onPreviousImgClick={onPreviousImgClick}
+          />
         </Portal>
       )}
     </>

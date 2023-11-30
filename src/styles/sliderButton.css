@@ -1,0 +1,23 @@
+.sliderButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.sliderButton:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.sliderButtonIcon {
+  font-size: 28px;
+}
+
+.sliderButtonIcon path {
+  stroke: white;
+}
