@@ -1,5 +1,4 @@
 import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
-import React from "react";
 import { IoMdDownload } from "react-icons/io";
 
 import "../styles/image.css";

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "./Image";
 import { useParams } from "react-router-dom";
@@ -28,15 +34,23 @@ const MyImages = () => {
   const [currentImg, setCurrentImg] = useState(null);
 
   const imagePerPage = 6;
-  const images = data.slice(0, page * imagePerPage);
+  const images = useMemo(
+    () => data.slice(0, page * imagePerPage),
+    [data, page]
+  );
   const lastPage = page * imagePerPage >= data.length;
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName,
-    },
-  });
+  const cld = useMemo(
+    () =>
+      new Cloudinary({
+        cloud: {
+          cloudName,
+        },
+      }),
+    []
+  );
 
+  console.log("render");
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://res.cloudinary.com/${cloudName}/image/list/${country}.json`;
@@ -125,32 +139,40 @@ const MyImages = () => {
     setIsSliderOpen(false);
   };
 
-  const mapImages = images.map((image, id) => {
-    const cldImage = cld.image(image.public_id);
-    // cldImage.quality("auto").format("auto");
-    // .effect("e_sharpen"); //to do check different effects
-    //to do remove styles to separate folder
-    return (
-      <Image
-        key={image.public_id}
-        containerRef={
-          images.length === id + 1 && !lastPage && !isLoading
-            ? lastBookElementRef
-            : null
-        }
-        imageClass="image"
-        containerClass="containerImage"
-        cldImage={cldImage}
-        isAdvancedImage
-        onImageClick={() => {
-          onImageClick(id);
-        }}
-        handleDownload={() => imageDownload(cldImage.toURL(), image.public_id)}
-      >
-        <p className="imageDescription">{removeBeforeSlash(image.public_id)}</p>
-      </Image>
-    );
-  });
+  const mapImages = useMemo(
+    () =>
+      images.map((image, id) => {
+        const cldImage = cld.image(image.public_id);
+        // cldImage.quality("auto").format("auto");
+        // .effect("e_sharpen"); //to do check different effects
+        //to do remove styles to separate folder
+        return (
+          <Image
+            key={image.public_id}
+            containerRef={
+              images.length === id + 1 && !lastPage && !isLoading
+                ? lastBookElementRef
+                : null
+            }
+            imageClass="image"
+            containerClass="containerImage"
+            cldImage={cldImage}
+            isAdvancedImage
+            onImageClick={() => {
+              onImageClick(id);
+            }}
+            handleDownload={() =>
+              imageDownload(cldImage.toURL(), image.public_id)
+            }
+          >
+            <p className="imageDescription">
+              {removeBeforeSlash(image.public_id)}
+            </p>
+          </Image>
+        );
+      }),
+    [images, cld, isLoading, lastBookElementRef, lastPage]
+  );
 
   return (
     <>
