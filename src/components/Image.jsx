@@ -13,9 +13,10 @@ const Image = ({
   isAdvancedImage,
   children,
   handleDownload,
+  onImageClick,
 }) => {
   return (
-    <div ref={containerRef} className={containerClass}>
+    <div ref={containerRef} className={containerClass} onClick={onImageClick}>
       <div className="imageAndDetailsContainer">
         {isAdvancedImage ? (
           <AdvancedImage

@@ -6,6 +6,8 @@ import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
 import "../styles/myImages.css";
 import imageDownload from "../utils/imageDownload";
+import Portal from "./Portal";
+import Slider from "./Slider";
 
 //to to   - create function to show the details
 function removeBeforeSlash(str) {
@@ -22,6 +24,9 @@ const MyImages = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSliderOpen, setIsSliderOpen] = useState(false);
+  const [currentImg, setCurrentImg] = useState(false);
+
   const imagePerPage = 6;
   const images = data.slice(0, page * imagePerPage);
   const lastPage = page * imagePerPage >= data.length;
@@ -97,6 +102,11 @@ const MyImages = () => {
     };
   }, [images.length]);
 
+  const onImageClick = (currentImg) => {
+    setIsSliderOpen(true);
+    setCurrentImg(currentImg);
+  };
+
   const mapImages = images.map((image, id) => {
     const cldImage = cld.image(image.public_id);
     // cldImage.quality("auto").format("auto");
@@ -114,6 +124,9 @@ const MyImages = () => {
         containerClass="containerImage"
         cldImage={cldImage}
         isAdvancedImage
+        onImageClick={() => {
+          onImageClick(cldImage);
+        }}
         handleDownload={() => imageDownload(cldImage.toURL(), image.public_id)}
       >
         <p className="imageDescription">{removeBeforeSlash(image.public_id)}</p>
@@ -127,6 +140,11 @@ const MyImages = () => {
         {mapImages}
       </div>
       {isLoading && <h1>loading....</h1>}
+      {isSliderOpen && (
+        <Portal>
+          <Slider cldImage={currentImg} />
+        </Portal>
+      )}
     </>
   );
 };

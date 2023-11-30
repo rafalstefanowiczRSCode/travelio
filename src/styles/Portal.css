@@ -1,0 +1,21 @@
+.portalOverlay {
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(1, 1, 1, 0.4);
+  inset: 0;
+}
+
+.portal {
+  position: fixed;
+  z-index: 2;
+  background-color: white;
+  height: 96vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+}
+
+.overflowHidden {
+  overflow: hidden;
+}
