@@ -18,7 +18,11 @@
   top: 20px;
 }
 .sliderCloseButton:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
+}
+
+.sliderButton.simulateCloseButtonActive {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .sliderPreviousButton {
@@ -30,6 +34,9 @@
 .sliderPreviousButton:active {
   left: 16px;
 }
+.simulatePreviousButtonActive {
+  left: 16px;
+}
 
 .sliderNextButton {
   position: absolute;
@@ -38,5 +45,8 @@
   transform: translateY(-50%);
 }
 .sliderNextButton:active {
+  right: 16px;
+}
+.simulateNextButtonActive {
   right: 16px;
 }

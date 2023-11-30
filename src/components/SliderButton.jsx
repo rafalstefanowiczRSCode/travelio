@@ -1,9 +1,13 @@
 import React from "react";
 import "../styles/sliderButton.css";
 
-const SliderButton = ({ icon, handleClick, className }) => {
+const SliderButton = ({ icon, handleClick, className, buttonRef }) => {
   return (
-    <button className={`sliderButton ${className}`} onClick={handleClick}>
+    <button
+      ref={buttonRef}
+      className={`sliderButton ${className}`}
+      onClick={handleClick}
+    >
       {icon && React.cloneElement(icon, { className: "sliderButtonIcon" })}
     </button>
   );
