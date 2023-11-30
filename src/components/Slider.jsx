@@ -19,30 +19,30 @@ const Slider = ({
   const onLeftArrowClick = () => {
     if (!prevButtonRef) return;
     prevButtonRef.current.classList.add("simulatePreviousButtonActive");
+    prevButtonRef.current.click();
 
     setTimeout(() => {
       prevButtonRef.current.classList.remove("simulatePreviousButtonActive");
-      prevButtonRef.current.click();
     }, 100);
   };
 
   const onRightArrowClick = () => {
     if (!nextButtonRef) return;
     nextButtonRef.current.classList.add("simulateNextButtonActive");
+    nextButtonRef.current.click();
 
     setTimeout(() => {
       nextButtonRef.current.classList.remove("simulateNextButtonActive");
-      nextButtonRef.current.click();
     }, 100);
   };
 
   const onExitClick = () => {
     if (!closeButtonRef) return;
     closeButtonRef.current.classList.add("simulateCloseButtonActive");
+    closeButtonRef.current.click();
 
     setTimeout(() => {
       closeButtonRef.current.classList.remove("simulateCloseButtonActive");
-      closeButtonRef.current.click();
     }, 100);
   };
 

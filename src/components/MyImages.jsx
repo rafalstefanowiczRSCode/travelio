@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
-import Image from "./Image";
+import { memoImage as Image } from "./Image";
 import { useParams } from "react-router-dom";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";

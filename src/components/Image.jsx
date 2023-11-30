@@ -2,6 +2,7 @@ import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
 import { IoMdDownload } from "react-icons/io";
 
 import "../styles/image.css";
+import React, { memo } from "react";
 
 const Image = ({
   containerRef,
@@ -38,4 +39,7 @@ const Image = ({
   );
 };
 
-export default Image;
+const isEqual = (prevProps, nextProps) => {
+  return prevProps.containerRef === nextProps.containerRef;
+};
+export const memoImage = memo(Image, isEqual);
