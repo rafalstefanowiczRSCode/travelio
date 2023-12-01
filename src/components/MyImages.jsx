@@ -161,9 +161,10 @@ const MyImages = () => {
             onImageClick={() => {
               onImageClick(id);
             }}
-            handleDownload={() =>
-              imageDownload(cldImage.toURL(), image.public_id)
-            }
+            handleDownload={(e) => {
+              e.stopPropagation();
+              imageDownload(cldImage.toURL(), image.public_id);
+            }}
           >
             <p className="imageDescription">
               {removeBeforeSlash(image.public_id)}
