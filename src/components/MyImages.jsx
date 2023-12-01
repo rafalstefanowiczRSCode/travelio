@@ -148,7 +148,6 @@ const MyImages = () => {
             imageClass="image"
             containerClass="containerImage"
             cldImage={cldImage}
-            isAdvancedImage
             onImageClick={() => {
               onImageClick(id);
             }}

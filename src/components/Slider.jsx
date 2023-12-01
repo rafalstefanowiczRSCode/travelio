@@ -13,6 +13,7 @@ const Slider = ({
   onNextImgClick,
   onPreviousImgClick,
   handleDownload,
+  imgSrc,
 }) => {
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
@@ -106,7 +107,11 @@ const Slider = ({
         className="sliderNextButton"
         buttonRef={nextButtonRef}
       />
-      <AdvancedImage className="sliderImage" cldImg={cldImage} />
+      {cldImage ? (
+        <AdvancedImage className="sliderImage" cldImg={cldImage} />
+      ) : (
+        <img className="sliderImage" src={imgSrc} />
+      )}
     </div>
   );
 };

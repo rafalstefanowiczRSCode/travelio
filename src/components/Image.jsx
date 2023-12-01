@@ -1,4 +1,4 @@
-import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
+import { AdvancedImage, placeholder } from "@cloudinary/react";
 import { IoMdDownload } from "react-icons/io";
 
 import "../styles/image.css";
@@ -10,15 +10,16 @@ const Image = ({
   imageClass,
   imageStyle,
   cldImage,
-  isAdvancedImage,
   children,
   handleDownload,
   onImageClick,
+  imgSrc,
+  imgAlt,
 }) => {
   return (
     <div ref={containerRef} className={containerClass} onClick={onImageClick}>
       <div className="imageAndDetailsContainer">
-        {isAdvancedImage ? (
+        {cldImage ? (
           <AdvancedImage
             className={imageClass}
             style={imageStyle}
@@ -26,7 +27,7 @@ const Image = ({
             plugins={[placeholder({ mode: "blur" })]}
           />
         ) : (
-          <img></img>
+          <img src={imgSrc} alt={imgAlt} className={imageClass} />
         )}
         <div className="imageDetails">
           {children}

@@ -37,7 +37,6 @@ const CountryImages = () => {
   }, []);
 
   const observer = useRef(null);
-
   const lastBookElementRef = (node) => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {

@@ -20,10 +20,6 @@
   visibility: visible;
 }
 
-.myImages .imageDescription {
-  font-weight: 700;
-}
-
 @media only screen and (max-width: 1024px) {
   .myImages .containerImage {
     width: 50%;
