@@ -12,17 +12,9 @@ import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
 import "../styles/myImages.css";
 import imageDownload from "../utils/imageDownload";
+import generateDescription from "../utils/generateDescription";
 import Portal from "./Portal";
 import Slider from "./Slider";
-
-//to to   - create function to show the details
-function removeBeforeSlash(str) {
-  const slashIndex = str.indexOf("/");
-  if (slashIndex === -1) {
-    return str; // Return the original string if no slash is found
-  }
-  return str.substring(slashIndex + 1);
-}
 
 const cloudName = "dduk3mqt0";
 const MyImages = () => {
@@ -166,7 +158,7 @@ const MyImages = () => {
             }}
           >
             <p className="imageDescription">
-              {removeBeforeSlash(image.public_id)}
+              {generateDescription(image.public_id)}
             </p>
           </Image>
         );
