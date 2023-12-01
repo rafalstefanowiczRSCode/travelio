@@ -9,6 +9,7 @@
   cursor: pointer;
   transition: 0.1s;
   background-color: rgba(0, 0, 0, 0.4);
+  color: white;
 }
 
 .sliderButton:hover {

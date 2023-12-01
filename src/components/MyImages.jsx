@@ -50,7 +50,6 @@ const MyImages = () => {
     []
   );
 
-  console.log("render");
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://res.cloudinary.com/${cloudName}/image/list/${country}.json`;
@@ -117,8 +116,8 @@ const MyImages = () => {
   }, [images.length]);
 
   const onImageClick = (currentImg) => {
-    setIsSliderOpen(true);
     setCurrentImg(currentImg);
+    setIsSliderOpen(true);
   };
 
   const onNextImgClick = () => {
@@ -175,6 +174,8 @@ const MyImages = () => {
     [images, cld, isLoading, lastBookElementRef, lastPage]
   );
 
+  const cldImage = currentImg && cld.image(images[currentImg].public_id);
+
   return (
     <>
       <div ref={gridRef} className="myImages">
@@ -184,10 +185,13 @@ const MyImages = () => {
       {isSliderOpen && (
         <Portal>
           <Slider
-            cldImage={cld.image(images[currentImg].public_id)}
+            cldImage={cldImage}
             handleClose={onCloseSliderClick}
             onNextImgClick={onNextImgClick}
             onPreviousImgClick={onPreviousImgClick}
+            handleDownload={() =>
+              imageDownload(cldImage.toURL(), images[currentImg].public_id)
+            }
           />
         </Portal>
       )}

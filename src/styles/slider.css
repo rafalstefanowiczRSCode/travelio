@@ -26,6 +26,15 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.sliderDownloadButton {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.sliderDownloadButton:active {
+  transform: scale(0.95);
+}
+
 .sliderPreviousButton {
   position: absolute;
   left: 20px;

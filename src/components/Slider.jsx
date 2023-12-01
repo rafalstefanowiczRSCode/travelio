@@ -2,6 +2,7 @@ import { AdvancedImage } from "@cloudinary/react";
 import React, { useEffect, useRef } from "react";
 import "../styles/slider.css";
 import { GrLinkPrevious, GrLinkNext, GrClose } from "react-icons/gr";
+import { IoMdDownload } from "react-icons/io";
 import SliderButton from "./SliderButton";
 
 const Slider = ({
@@ -11,6 +12,7 @@ const Slider = ({
   handleNext,
   onNextImgClick,
   onPreviousImgClick,
+  handleDownload,
 }) => {
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
@@ -68,13 +70,29 @@ const Slider = ({
     };
   }, []);
 
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    const overlay = document.querySelector(".portalOverlay");
+    overlay.addEventListener("click", handleClose);
+
+    return () => {
+      overlay.removeEventListener("click", handleClose);
+    };
+  }, [handleClose]);
+
   return (
-    <div className="slider">
+    <div className="slider" ref={sliderRef}>
       <SliderButton
         icon={<GrClose />}
         handleClick={handleClose}
         className="sliderCloseButton"
         buttonRef={closeButtonRef}
+      />
+      <SliderButton
+        icon={<IoMdDownload />}
+        handleClick={handleDownload}
+        className="sliderDownloadButton"
       />
       <SliderButton
         icon={<GrLinkPrevious />}
