@@ -4,11 +4,13 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .sliderImage {
   display: block;
   max-height: 100%;
+  max-width: 80vw;
 }
 
 .sliderCloseButton {

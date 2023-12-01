@@ -39,10 +39,10 @@ const Slider = ({
   const onExitClick = () => {
     if (!closeButtonRef) return;
     closeButtonRef.current.classList.add("simulateCloseButtonActive");
-    closeButtonRef.current.click();
 
     setTimeout(() => {
       closeButtonRef.current.classList.remove("simulateCloseButtonActive");
+      closeButtonRef.current.click();
     }, 100);
   };
 
