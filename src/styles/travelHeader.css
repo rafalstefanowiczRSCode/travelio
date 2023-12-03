@@ -1,0 +1,118 @@
+.travelHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  padding: 22px;
+  background-color: white;
+  gap: 12px;
+}
+
+.travelHeader .greetings {
+  font-size: 18px;
+}
+
+.dropdownWrapper {
+  position: relative;
+  width: 200px;
+}
+
+.travelHeader input {
+  height: 36px;
+  width: 100%;
+  padding: 6px;
+  border-radius: 3px;
+  border: 2px solid #888;
+  outline: none;
+  font-size: 14px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.travelHeader input:focus {
+  border-color: #555;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.travelHeader .dropdown {
+  max-height: 160px;
+  overflow: scroll;
+  position: absolute;
+  background-color: white;
+  z-index: 2;
+  overflow-x: hidden;
+  width: 100%;
+  margin-top: 5px;
+  cursor: pointer;
+  border: 1px solid #888;
+  border-radius: 5px;
+}
+
+.travelHeader .dropdownItem {
+  padding: 6px;
+}
+
+.travelHeader .dropdownItem:hover {
+  background-color: #555;
+  color: white;
+}
+
+.visitButtonContainer {
+  min-width: 102px;
+}
+
+.visitButton {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 6px 10px;
+  border-top-right-radius: 44px;
+  border-bottom-right-radius: 44px;
+  border: none;
+  color: white;
+  background-color: #555;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.travelHeader button:disabled {
+  cursor: default;
+  background-color: #888;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.travelHeader button:enabled:hover .buttonIcon {
+  margin-left: 26px;
+}
+
+.travelHeader button:active {
+  transform: scale(0.98);
+}
+
+.travelHeader .buttonIcon {
+  margin-left: 8px;
+  font-size: 20px;
+  transition: 0.3s linear;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

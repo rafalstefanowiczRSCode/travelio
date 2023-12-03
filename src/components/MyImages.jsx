@@ -165,7 +165,8 @@ const MyImages = () => {
     [images, cld, isLoading, lastBookElementRef, lastPage]
   );
 
-  const cldImage = currentImg && cld.image(images[currentImg].public_id);
+  const cldImage =
+    currentImg !== null && cld.image(images[currentImg].public_id);
 
   return (
     <>

@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { FaPlaneArrival } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import "../styles/travelHeader.css";
 
 import {
   updateInputAction,
   updateShowDropdownAction,
 } from "../reducers/mapReducer";
+import MapToggle from "./MapToggle";
 
 const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   const dropdownWrapperRef = useRef(null);
@@ -48,7 +50,8 @@ const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   };
   return (
     <div className="travelHeader">
-      <h3 className="greetings">Pick your destination</h3>
+      <MapToggle />
+      <h3 className="greetings">Pick destination</h3>
       <div ref={dropdownWrapperRef} className="dropdownWrapper">
         <input
           ref={inputRef}
@@ -61,10 +64,16 @@ const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
         />
         {state.showDropdown && <div className="dropdown">{countryMap}</div>}
       </div>
-      <button disabled={!selectedCountry} onClick={handleButtonClick}>
-        Visit
-        <FaPlaneArrival className="buttonIcon" />
-      </button>
+      <div className={"visitButtonContainer"}>
+        <button
+          className="visitButton"
+          disabled={!selectedCountry}
+          onClick={handleButtonClick}
+        >
+          Visit
+          <FaPlaneArrival className="buttonIcon" />
+        </button>
+      </div>
     </div>
   );
 };
