@@ -1,0 +1,6 @@
+.breakLine {
+  border: 1px solid #888;
+  width: 110%;
+  transform: translateX(-5%);
+  margin: 6px 0px;
+}
