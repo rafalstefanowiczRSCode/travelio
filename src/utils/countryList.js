@@ -1,4 +1,5 @@
 import { worldMill } from "@react-jvectormap/world";
+import visitedCountries from "../constants/visitedCountries";
 
 export const filterCountryList = (countryList, arg) => {
   const regex = new RegExp(arg, "i");
@@ -77,3 +78,7 @@ export const countryNames = Object.keys(countryCodes).reduce((total, code) => {
 export const countryList = Object.values(worldMill.content.paths)
   .map(({ name }) => name)
   .sort();
+
+export const rSCodeCountryList = visitedCountries.map(
+  (visitedCountry) => countryCodes[visitedCountry].name
+);

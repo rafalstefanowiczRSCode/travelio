@@ -28,10 +28,14 @@
 }
 
 .toggleOption:not(.selected):hover {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .toggleSvg {
   margin-right: 4px;
   font-size: 16px;
+}
+
+.toggleOption:disabled {
+  color: inherit;
 }

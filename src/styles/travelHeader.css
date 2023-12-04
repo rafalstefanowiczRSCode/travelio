@@ -5,7 +5,7 @@
   color: #333;
   padding: 22px;
   background-color: white;
-  gap: 12px;
+  gap: 14px;
 }
 
 .travelHeader .greetings {
@@ -77,17 +77,17 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.travelHeader button:disabled {
+.travelHeader .visitButton:disabled {
   cursor: default;
   background-color: #888;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.travelHeader button:enabled:hover .buttonIcon {
+.travelHeader .visitButton:enabled:hover .buttonIcon {
   margin-left: 26px;
 }
 
-.travelHeader button:active {
+.travelHeader .visitButton:active {
   transform: scale(0.98);
 }
 

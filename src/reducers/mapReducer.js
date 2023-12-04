@@ -1,33 +1,52 @@
+import { createContext, useContext } from "react";
+
+import {
+  countryList,
+  filterCountryList,
+  rSCodeCountryList,
+} from "../utils/countryList";
+
 const ACTION_TYPES = {
   updateInput: "UPDATE_INPUT",
   selectCountry: "SELECT_COUNTRY",
   updateShowDropdown: "UPDATE_SHOW_DROPDOWN",
+  updateRSCodeSelected: "UPDATE_RSCODE_SELECTED",
 };
 
-import { countryList, filterCountryList } from "../utils/countryList";
-
-const mapReducer = (state, action) => {
-  switch (action.type) {
+const mapReducer = (state, { type, payload }) => {
+  const matchedCountryList = state.rsCodeSelected
+    ? rSCodeCountryList
+    : countryList;
+  switch (type) {
     case ACTION_TYPES.updateInput:
       return {
         ...state,
         showDropdown: true,
-        inputValue: action.payload,
-        filteredCountryList: filterCountryList(countryList, action.payload),
+        inputValue: payload,
+        filteredCountryList: filterCountryList(matchedCountryList, payload),
       };
 
     case ACTION_TYPES.selectCountry:
       return {
         ...state,
         showDropdown: false,
-        inputValue: action.payload,
-        filteredCountryList: countryList,
+        inputValue: payload,
+        filteredCountryList: matchedCountryList,
       };
 
     case ACTION_TYPES.updateShowDropdown:
       return {
         ...state,
-        showDropdown: action.payload,
+        showDropdown: payload,
+      };
+
+    case ACTION_TYPES.updateRSCodeSelected:
+      return {
+        ...state,
+        inputValue: "",
+        filteredCountryList: payload ? rSCodeCountryList : countryList,
+        showDropdown: false,
+        rsCodeSelected: payload,
       };
 
     default:
@@ -43,8 +62,15 @@ export const selectCountryAction = (value) => {
   return { type: ACTION_TYPES.selectCountry, payload: value };
 };
 
-export const updateShowDropdownAction = (showDropdown) => {
-  return { type: ACTION_TYPES.updateShowDropdown, payload: showDropdown };
+export const updateShowDropdownAction = (value) => {
+  return { type: ACTION_TYPES.updateShowDropdown, payload: value };
 };
+
+export const updateRSCodeSelectedAction = (value) => {
+  return { type: ACTION_TYPES.updateRSCodeSelected, payload: value };
+};
+
+export const MapContext = createContext();
+export const useMapContext = () => useContext(MapContext);
 
 export default mapReducer;
