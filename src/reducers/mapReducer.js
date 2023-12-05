@@ -27,12 +27,18 @@ const mapReducer = (state, { type, payload }) => {
       };
 
     case ACTION_TYPES.selectCountry:
-      return {
-        ...state,
-        showDropdown: false,
-        inputValue: payload,
-        filteredCountryList: matchedCountryList,
-      };
+      if (
+        !state.rsCodeSelected ||
+        rSCodeCountryList.find((country) => country === payload)
+      ) {
+        return {
+          ...state,
+          showDropdown: false,
+          inputValue: payload,
+          filteredCountryList: matchedCountryList,
+        };
+      }
+      return state;
 
     case ACTION_TYPES.updateShowDropdown:
       return {

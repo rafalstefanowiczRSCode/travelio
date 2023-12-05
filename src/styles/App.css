@@ -38,8 +38,40 @@
   background-color: #3d85c6;
 }
 
-/* todo add styles to the tip */
-.tip {
+.vectorMap path:hover {
+  fill-opacity: 1;
+  cursor: default;
+}
+
+.vectorMap:not(.rsCode) path {
+  cursor: pointer;
+}
+
+.vectorMap:not(.rsCode) path:hover {
+  fill: #1a3d5b;
+}
+
+.vectorMap path.visited:hover {
+  fill: rgb(28, 103, 28);
+  cursor: pointer;
+}
+
+body .jvectormap-tip {
+  opacity: 0;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 6px;
+}
+
+body .jvectormap-tip.rsCode:has(.visited) {
+  opacity: 1;
+}
+
+body .jvectormap-tip:not(.rsCode) {
+  opacity: 1;
 }
 
 .plane {
@@ -51,11 +83,6 @@
   transform: translate(-50%, -50%) rotate(45deg);
   transition: left 3s ease, top 3s ease;
   background-color: transparent;
-}
-
-.jvectormap-tip {
-  font-size: 12px;
-  padding: 3px 6px;
 }
 
 .jvectormap-zoomout {

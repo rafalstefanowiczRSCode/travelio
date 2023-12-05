@@ -5,9 +5,13 @@ import { worldMill } from "@react-jvectormap/world";
 import visitedCountries from "../constants/visitedCountries";
 import { countryNames } from "../utils/countryList";
 import { debounce } from "../utils/debounce";
+import { useMapContext } from "../reducers/mapReducer";
 
 const Globe = ({ onCountryClick, selectedCountry }) => {
   const isInitialMount = useRef(true);
+  const {
+    state: { rsCodeSelected },
+  } = useMapContext();
 
   // move plane while selectedCountry changed
   useEffect(() => {
@@ -102,19 +106,37 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
     planeImg.style.left = newLeftPlanePosition;
   };
 
+  const onRegionTipShow = (_, label, code) => {
+    const isVisited = visitedCountries.find((visited) => visited === code);
+    const path = document.querySelector(`path[data-code=${code}]`);
+    if (isVisited && path) path.classList.add("visited");
+
+    return label.html(`
+        <span class=${isVisited && "visited"}>
+             ${label.html()}
+        </span>`);
+  };
+
+  useEffect(() => {
+    const tipElements = document.querySelectorAll(".jvectormap-tip");
+    tipElements.forEach((el, id) => {
+      if (id < tipElements.length - 1) {
+        el.remove();
+      }
+    });
+
+    rsCodeSelected
+      ? tipElements[tipElements.length - 1].classList.add("rsCode")
+      : tipElements[tipElements.length - 1].classList.remove("rsCode");
+  }, [rsCodeSelected]);
+
   return (
     <VectorMap
-      className={"vectorMap"}
+      className={`vectorMap ${rsCodeSelected ? "rsCode " : ""}`}
       backgroundColor="transparent"
       style={{ height: "80%" }}
       zoomOnScroll={false}
-      // todo
-      onRegionTipShow={(_, label) => {
-        return label.html(`
-        <span class="tip">
-             ${label.html()}
-        </span>`);
-      }}
+      onRegionTipShow={onRegionTipShow}
       map={worldMill}
       selectedRegions={visitedCountries}
       regionStyle={{
