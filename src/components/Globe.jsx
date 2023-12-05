@@ -134,7 +134,9 @@ const Globe = ({ onCountryClick, selectedCountry }) => {
     <VectorMap
       className={`vectorMap ${rsCodeSelected ? "rsCode " : ""}`}
       backgroundColor="transparent"
-      style={{ height: "80%" }}
+      style={{
+        height: "calc(100% - 80px)",
+      }}
       zoomOnScroll={false}
       onRegionTipShow={onRegionTipShow}
       map={worldMill}

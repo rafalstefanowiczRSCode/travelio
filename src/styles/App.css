@@ -30,12 +30,15 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background-color: #3d85c6;
+  padding: 0 20px 20px 20px;
 }
 
 .vectorMap {
-  padding: 20px;
+  margin: 0 auto;
+  max-width: 1380px;
+  padding: 30px;
   background-color: #3d85c6;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
 .vectorMap path:hover {
