@@ -1,9 +1,6 @@
-.countryBack {
-}
-
 .countryBack .backButton {
   position: absolute;
-  left: 50px;
+  right: 20px;
   top: 30px;
   z-index: 1;
   border: none;
@@ -26,11 +23,7 @@
 .countryBack .backButtonFixed {
   position: fixed;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.countryBack:hover .backButton {
-  width: 105px;
-  left: 30px;
+  left: 20px;
 }
 
 .countryBack .buttonIcon {
@@ -38,10 +31,6 @@
   margin-right: 6px;
   transition: margin-right 0.25s linear;
   font-size: 18px;
-}
-
-.countryBack:hover .buttonIcon {
-  margin-right: 26px;
 }
 
 .countryBack .backButton:active {
@@ -54,5 +43,20 @@
   }
   .countryBack:hover .backButton {
     left: calc(((100vw - 1320px) / 2));
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .countryBack .backButton {
+    left: 50px;
+  }
+
+  .countryBack:hover .backButton {
+    width: 105px;
+    left: 30px;
+  }
+
+  .countryBack:hover .buttonIcon {
+    margin-right: 26px;
   }
 }

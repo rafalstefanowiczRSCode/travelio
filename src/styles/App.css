@@ -98,6 +98,7 @@ body .jvectormap-tip:not(.rsCode) {
   max-width: 1380px;
   margin: 0 auto;
   padding: 0px 24px;
+  position: relative;
 }
 
 .grid {

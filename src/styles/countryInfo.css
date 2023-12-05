@@ -1,6 +1,5 @@
 .countryInfo {
   display: flex;
-  align-items: center;
   justify-content: center;
   padding: 10px 0;
 }
@@ -30,4 +29,16 @@
 
 .detailsContainer {
   font-size: 14px;
+}
+
+@media only screen and (max-width: 768px) {
+  .countryInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .countryPage {
+    padding: 0px 14px;
+  }
 }
