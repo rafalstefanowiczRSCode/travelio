@@ -1,15 +1,16 @@
 .travelHeader {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #333;
-  padding: 22px;
-  background-color: white;
+  padding: 22px 0px;
   gap: 14px;
 }
 
 .travelHeader .greetings {
   font-size: 18px;
+  margin-left: 20px;
 }
 
 .dropdownWrapper {

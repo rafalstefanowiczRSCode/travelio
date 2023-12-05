@@ -51,7 +51,7 @@ const TravelHeader = ({ state, action, onCountryClick, selectedCountry }) => {
   return (
     <div className="travelHeader">
       <MapToggle />
-      <h3 className="greetings">Pick destination</h3>
+      <h3 className="greetings">Pick destination:</h3>
       <div ref={dropdownWrapperRef} className="dropdownWrapper">
         <input
           ref={inputRef}

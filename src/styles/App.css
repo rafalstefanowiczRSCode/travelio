@@ -35,7 +35,6 @@
 
 .vectorMap {
   margin: 0 auto;
-  max-width: 1380px;
   padding: 30px;
   background-color: #3d85c6;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
@@ -109,6 +108,15 @@ body .jvectormap-tip:not(.rsCode) {
 
 .grid-item {
   width: 33.3333%;
+}
+
+@media only screen and (min-width: 1380px) {
+  .map {
+    padding: 0 80px 60px 80px;
+  }
+  .vectorMap {
+    margin-top: 10px;
+  }
 }
 
 @media only screen and (max-width: 1024px) {

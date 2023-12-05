@@ -1,5 +1,5 @@
 .toggleContainer {
-  height: 100%;
+  height: 36px;
   border: 2px solid #888;
   display: flex;
   align-items: center;
@@ -38,4 +38,35 @@
 
 .toggleOption:disabled {
   color: inherit;
+}
+
+@media only screen and (max-width: 768px) {
+  .travelHeader {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    flex-direction: column;
+    background-color: white;
+  }
+
+  .toggleContainer {
+    margin-left: 0px;
+  }
+
+  .visitButton {
+    height: 34px;
+    width: 140px;
+    justify-content: center;
+    border-radius: 44px;
+  }
+
+  .travelHeader .visitButton:enabled:hover .buttonIcon {
+    margin-left: 8px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .travelHeader .greetings {
+    margin-left: 0px;
+  }
 }
