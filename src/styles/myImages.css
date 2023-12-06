@@ -1,23 +1,22 @@
 .myImages {
   display: flex;
   flex-wrap: wrap;
-  position: "relative";
 }
 
 .myImages .containerImage {
   width: 33.3333%;
   background-color: transparent;
   border: none;
+  visibility: hidden;
+}
+
+.myImages .containerImage:has(.imageLoaded) {
+  visibility: visible;
 }
 
 .myImages .image {
   width: 100%;
-  visibility: hidden;
   display: block;
-}
-
-.myImages .imageLoaded {
-  visibility: visible;
 }
 
 @media only screen and (max-width: 1024px) {
