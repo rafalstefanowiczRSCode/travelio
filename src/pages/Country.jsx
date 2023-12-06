@@ -6,6 +6,7 @@ import UnsplashImages from "../components/UnsplashImages";
 import MyImages from "../components/MyImages";
 import ToggleUnsplash from "../components/ToggleUnsplash";
 import { useState } from "react";
+import "../styles/country.css";
 
 const Country = () => {
   const [showUnsplash, setShowUnsplash] = useState(false);

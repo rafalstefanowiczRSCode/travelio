@@ -1,0 +1,77 @@
+.map {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0 20px 20px 20px;
+}
+
+.vectorMap {
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #3d85c6;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.vectorMap path:hover {
+  fill-opacity: 1;
+  cursor: default;
+}
+
+.vectorMap:not(.rsCode) path {
+  cursor: pointer;
+}
+
+.vectorMap:not(.rsCode) path:hover {
+  fill: #1a3d5b;
+}
+
+.vectorMap path.visited:hover {
+  fill: rgb(28, 103, 28);
+  cursor: pointer;
+}
+
+body .jvectormap-tip {
+  opacity: 0;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 6px;
+}
+
+body .jvectormap-tip.rsCode:has(.visited) {
+  opacity: 1;
+}
+
+body .jvectormap-tip:not(.rsCode) {
+  opacity: 1;
+}
+
+.plane {
+  z-index: 1;
+  position: fixed;
+  left: -40px;
+  top: 50vh;
+  width: 40px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: left 3s ease, top 3s ease;
+  background-color: transparent;
+}
+
+.jvectormap-zoomout {
+  display: none;
+}
+.jvectormap-zoomin {
+  display: none;
+}
+
+@media only screen and (min-width: 1380px) {
+  .map {
+    padding: 0 80px 60px 80px;
+  }
+  .vectorMap {
+    margin-top: 10px;
+  }
+}

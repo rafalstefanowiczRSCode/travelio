@@ -27,7 +27,7 @@
   font-weight: 900;
 }
 
-.detailsContainer {
+.countryInfo .detailsContainer {
   font-size: 14px;
 }
 
@@ -36,9 +36,5 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-  }
-
-  .countryPage {
-    padding: 0px 14px;
   }
 }

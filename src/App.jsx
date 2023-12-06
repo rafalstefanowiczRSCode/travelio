@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import "./styles/App.css";
+import "./styles/app.css";
 
 import Country from "./pages/Country";
 import Map from "./pages/Map";

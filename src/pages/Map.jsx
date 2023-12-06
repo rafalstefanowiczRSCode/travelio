@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from "react";
 
+import "../styles/map.css";
 import { useSearchParams } from "react-router-dom";
 import TravelHeader from "../components/TravelHeader";
 import plane from "../icons/plane.svg";

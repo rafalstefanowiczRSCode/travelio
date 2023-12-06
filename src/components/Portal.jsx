@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import "../styles/Portal.css";
+import "../styles/portal.css";
 
 const Portal = ({ children }) => {
   useEffect(() => {
