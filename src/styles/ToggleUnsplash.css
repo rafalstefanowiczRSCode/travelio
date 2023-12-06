@@ -1,6 +1,52 @@
-.breakLine {
+.toggleUnsplash {
+  padding: 16px 0px;
+  width: 100%;
+}
+/* to do */
+/* width: 110%; */
+/* transform: translateX(-5%); */
+
+.toggleUnsplash .breakLine {
   border: 1px solid #888;
-  width: 110%;
-  transform: translateX(-5%);
-  margin: 6px 0px;
+  width: 100%;
+  margin: 20px 0px;
+}
+
+.toggleUnsplash .unsplash {
+  font-size: 18px;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.toggleUnsplash .unsplashIcon {
+  margin-right: 8px;
+}
+
+.toggleUnsplash .toggleButton {
+  display: block;
+  width: 60%;
+  height: 41px;
+  text-align: center;
+  margin: 0px auto;
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  background-color: #555;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.toggleUnsplash .toggleButton:hover {
+  background-color: white;
+  color: #555;
+  border: 2px solid #555;
+}
+
+.toggleUnsplash .toggleButton:active {
+  transform: scale(0.97);
 }
