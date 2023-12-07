@@ -1,43 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import CountryDetails from "./CountryDetails";
 import "../styles/countryInfo.css";
+import { getCountryInfo } from "../utils/apiQueries";
 
 const CountryInfo = () => {
   const { country } = useParams();
-  const [data, setData] = useState({});
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://restcountries.com/v3.1/name/${country}?fullText=true`
-        );
-        const data = await response.json();
-        if (data.message) throw Error(data.message);
-        setData(data[0]);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [country]);
-
-  if (isLoading) {
+  //to do handle errors
+  const countryInfoQuery = useQuery({
+    queryKey: ["countryInfo", country],
+    queryFn: () => getCountryInfo(country),
+  });
+  if (countryInfoQuery.isLoading) {
     return <h1>Loading</h1>;
   }
 
   //to do navigation while error
   // show back button while error?
-  if (error) {
-    console.log(error);
+
+  if (countryInfoQuery.isError) {
     return <h1>error</h1>;
   }
+
+  const data = countryInfoQuery.data;
   return (
     <div className="countryInfo">
       <div className="mainContainer">

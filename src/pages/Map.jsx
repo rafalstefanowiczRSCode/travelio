@@ -8,15 +8,32 @@ import Globe from "../components/Globe";
 import mapReducer from "../reducers/mapReducer";
 import { countryList, rSCodeCountryList } from "../utils/countryList";
 import { selectCountryAction, MapContext } from "../reducers/mapReducer";
+import { queryClient } from "../main";
+import { getCountryInfo } from "../utils/apiQueries";
 
 const Map = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsValue = searchParams.get("search");
   const [state, action] = useReducer(mapReducer, {
-    inputValue: searchParams.get("search") || "",
+    inputValue: searchParamsValue || "",
     showDropdown: false,
     filteredCountryList: rSCodeCountryList,
     rsCodeSelected: true,
   });
+
+  useEffect(() => {
+    const isCountryInfoCached = queryClient.getQueryData([
+      "countryInfo",
+      searchParamsValue,
+    ]);
+
+    if (searchParamsValue && !isCountryInfoCached) {
+      queryClient.prefetchQuery({
+        queryKey: ["countryInfo", searchParamsValue],
+        queryFn: () => getCountryInfo(searchParamsValue),
+      });
+    }
+  }, [searchParamsValue]);
 
   const { inputValue, rsCodeSelected } = state;
   useEffect(() => {
@@ -45,11 +62,11 @@ const Map = () => {
           state={state}
           action={action}
           onCountryClick={onCountryClick}
-          selectedCountry={searchParams.get("search")}
+          selectedCountry={searchParamsValue}
         />
         <Globe
           onCountryClick={onCountryClick}
-          selectedCountry={searchParams.get("search")}
+          selectedCountry={searchParamsValue}
         />
       </div>
     </MapContext.Provider>
