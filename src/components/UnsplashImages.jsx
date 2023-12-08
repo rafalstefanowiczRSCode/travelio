@@ -1,51 +1,36 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { memoImage as Image } from "./Image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import Masonry from "masonry-layout";
 import imagesLoaded from "imagesloaded";
 import "../styles/myImages.css";
 import imageDownload from "../utils/imageDownload";
+import { memoImage as Image } from "./Image";
 import Portal from "./Portal";
 import Slider from "./Slider";
-
-const getApiUrl = (search, page) =>
-  `https://api.unsplash.com/search/photos?client_id=EnHPWht5jugnt3faJ0V2-BgTXGy_n2m-iqaOuaprGMg&page=${page}&query=${search}`;
+import { getUnsplashImages } from "../utils/apiQueries";
 
 const UnsplashImages = () => {
   const { country } = useParams();
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const [currentImg, setCurrentImg] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [error, setError] = useState("");
-  const [images, setImages] = useState([]);
 
-  const fetchImages = useCallback(async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    try {
-      const response = await fetch(getApiUrl(country, page));
-      const data = await response.json();
-      setTotalPages(data.total_pages);
-      setImages((prevImages) => [...prevImages, ...data.results]);
-      setPage((currentPage) => currentPage + 1);
-      setError("");
-    } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
-    }
-  }, [country, isLoading, page]);
+  const { fetchNextPage, data, hasNextPage, error } = useInfiniteQuery({
+    queryKey: ["unsplashImages", country],
+    getNextPageParam: (prevData, data) => {
+      if (prevData.total_pages === data.length) {
+        return null;
+      }
+      return data.length + 1;
+    },
+    queryFn: ({ pageParam }) => getUnsplashImages(country, pageParam),
+  });
 
-  useEffect(() => {
-    fetchImages();
-  }, []);
+  const images = useMemo(
+    () => data?.pages.flatMap((page) => page.results) || [],
+    [data]
+  );
 
   const observer = useRef(null);
   const lastBookElementRef = useCallback(
@@ -53,13 +38,14 @@ const UnsplashImages = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting && !error) {
-          fetchImages();
+          setIsLoading(true);
+          fetchNextPage();
         }
       });
 
       if (node) observer.current.observe(node);
     },
-    [fetchImages, error]
+    [error, fetchNextPage]
   );
 
   const gridRef = useRef(null);
@@ -116,15 +102,13 @@ const UnsplashImages = () => {
   const onCloseSliderClick = () => {
     setIsSliderOpen(false);
   };
-
-  const lastPage = totalPages < page;
   const mapImages = useMemo(() => {
     return images.map((item, id) => {
       return (
         <Image
           key={item.id}
           containerRef={
-            !lastPage && id + 1 === images.length && !isLoading
+            hasNextPage && id + 1 === images.length && !isLoading
               ? lastBookElementRef
               : null
           }
@@ -152,7 +136,7 @@ const UnsplashImages = () => {
         </Image>
       );
     });
-  }, [images, isLoading, lastBookElementRef, lastPage]);
+  }, [images, isLoading, lastBookElementRef, hasNextPage]);
 
   return (
     <>
@@ -175,7 +159,7 @@ const UnsplashImages = () => {
         </Portal>
       )}
       {/* to do */}
-      {lastPage && <h1>Last Page</h1>}
+      {!hasNextPage && <h1>Last Page</h1>}
       {/* to do error */}
     </>
   );

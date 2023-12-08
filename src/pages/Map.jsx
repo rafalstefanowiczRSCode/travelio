@@ -17,8 +17,8 @@ const Map = () => {
   const [state, action] = useReducer(mapReducer, {
     inputValue: searchParamsValue || "",
     showDropdown: false,
-    filteredCountryList: rSCodeCountryList,
-    rsCodeSelected: true,
+    filteredCountryList: countryList,
+    rsCodeSelected: false,
   });
 
   useEffect(() => {
