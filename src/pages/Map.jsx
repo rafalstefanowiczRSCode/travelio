@@ -9,7 +9,7 @@ import mapReducer from "../reducers/mapReducer";
 import { countryList, rSCodeCountryList } from "../utils/countryList";
 import { selectCountryAction, MapContext } from "../reducers/mapReducer";
 import { queryClient } from "../main";
-import { getCountryInfo } from "../utils/apiQueries";
+import { getCountryInfo, getUnsplashImages } from "../utils/apiQueries";
 
 const Map = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,17 +22,18 @@ const Map = () => {
   });
 
   useEffect(() => {
-    const isCountryInfoCached = queryClient.getQueryData([
-      "countryInfo",
-      searchParamsValue,
-    ]);
+    if (!searchParamsValue) return;
 
-    if (searchParamsValue && !isCountryInfoCached) {
-      queryClient.prefetchQuery({
-        queryKey: ["countryInfo", searchParamsValue],
-        queryFn: () => getCountryInfo(searchParamsValue),
-      });
-    }
+    queryClient.prefetchQuery({
+      queryKey: ["countryInfo", searchParamsValue],
+      queryFn: () => getCountryInfo(searchParamsValue),
+    });
+
+    queryClient.prefetchInfiniteQuery({
+      queryKey: ["unsplashImages", searchParamsValue],
+      queryFn: ({ pageParam }) =>
+        getUnsplashImages(searchParamsValue, pageParam),
+    });
   }, [searchParamsValue]);
 
   const { inputValue, rsCodeSelected } = state;
