@@ -4,6 +4,7 @@ import "./styles/app.css";
 
 import Country from "./pages/Country";
 import Map from "./pages/Map";
+import PreloadImageContext from "./context/PreloadImageContext";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AnimatePresence mode="wait">
-      <RouterProvider router={router} />
+      <PreloadImageContext>
+        <RouterProvider router={router} />
+      </PreloadImageContext>
     </AnimatePresence>
   );
 }
