@@ -13,6 +13,7 @@ const CountryInfo = () => {
     queryKey: ["countryInfo", country],
     queryFn: () => getCountryInfo(country),
   });
+
   if (countryInfoQuery.isLoading) {
     return <h1>Loading</h1>;
   }

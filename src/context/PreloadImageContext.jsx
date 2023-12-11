@@ -1,16 +1,16 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { queryClient } from "../main";
 
-const ImageContext = createContext(null);
+import { queryClient } from "../main";
 
 const preloadImage = (url) => {
   const img = new Image();
   img.src = url;
 };
 
-export const usePreloadImageContext = () => useContext(ImageContext);
+export const ImageContext = createContext(null);
 
 const PreloadImageContext = ({ children }) => {
+  //to do
   const [preloadedImages, setPreloadedImages] = useState({
     rsCodeImages: [],
     unsplashImages: [],

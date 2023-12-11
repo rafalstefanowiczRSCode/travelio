@@ -10,7 +10,7 @@ import { countryList, rSCodeCountryList } from "../utils/countryList";
 import { selectCountryAction, MapContext } from "../reducers/mapReducer";
 import { queryClient } from "../main";
 import { getCountryInfo, getUnsplashImages } from "../utils/apiQueries";
-import { usePreloadImageContext } from "../context/PreloadImageContext";
+import { usePreloadImageContext } from "../context/usePreloadImageContext";
 
 const Map = () => {
   const [searchParams, setSearchParams] = useSearchParams();
