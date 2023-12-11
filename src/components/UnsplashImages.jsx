@@ -12,11 +12,17 @@ import { getUnsplashImages } from "../utils/apiQueries";
 
 const UnsplashImages = () => {
   const { country } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const [currentImg, setCurrentImg] = useState(null);
 
-  const { fetchNextPage, data, hasNextPage, error } = useInfiniteQuery({
+  const {
+    fetchNextPage,
+    data,
+    hasNextPage,
+    error,
+    isLoading: isDataLoading,
+  } = useInfiniteQuery({
     queryKey: ["unsplashImages", country],
     getNextPageParam: (prevData, data) => {
       if (prevData.total_pages === data.length) {
@@ -38,7 +44,7 @@ const UnsplashImages = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting && !error) {
-          setIsLoading(true);
+          setIsImageLoading(true);
           fetchNextPage();
         }
       });
@@ -70,7 +76,7 @@ const UnsplashImages = () => {
         masonry.current.layout();
       }
 
-      setIsLoading(false);
+      setIsImageLoading(false);
     };
 
     const imgLoad = imagesLoaded(gridRef.current);
@@ -108,7 +114,7 @@ const UnsplashImages = () => {
         <Image
           key={item.id}
           containerRef={
-            hasNextPage && id + 1 === images.length && !isLoading
+            hasNextPage && id + 1 === images.length && !isImageLoading
               ? lastBookElementRef
               : null
           }
@@ -136,15 +142,18 @@ const UnsplashImages = () => {
         </Image>
       );
     });
-  }, [images, isLoading, lastBookElementRef, hasNextPage]);
+  }, [images, isImageLoading, lastBookElementRef, hasNextPage]);
 
+  if (isDataLoading) {
+    return <h1>DATA LOADING</h1>;
+  }
   return (
     <>
       <div ref={gridRef} className="myImages">
         {mapImages}
       </div>
       {/* to do */}
-      {isLoading && <h1>loading....</h1>}
+      {isImageLoading && <h1> image loading....</h1>}
       {isSliderOpen && (
         <Portal>
           <Slider

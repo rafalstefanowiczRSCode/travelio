@@ -14,15 +14,8 @@ const CountryInfo = () => {
     queryFn: () => getCountryInfo(country),
   });
 
-  if (countryInfoQuery.isLoading) {
-    return <h1>Loading</h1>;
-  }
-
-  //to do navigation while error
-  // show back button while error?
-
-  if (countryInfoQuery.isError) {
-    return <h1>error</h1>;
+  if (countryInfoQuery.isLoading || countryInfoQuery.isError) {
+    return <div className="countryInfo"></div>;
   }
 
   const data = countryInfoQuery.data;

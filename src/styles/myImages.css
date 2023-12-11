@@ -15,8 +15,12 @@
 }
 
 .myImages .image {
-  width: 100%;
+  width: 0%;
   display: block;
+}
+
+.myImages .image.imageLoaded {
+  width: 100%;
 }
 
 @media only screen and (max-width: 1024px) {

@@ -1,6 +1,7 @@
 .countryInfo {
   display: flex;
   justify-content: center;
+  min-height: 100px;
   padding: 10px 0;
 }
 
