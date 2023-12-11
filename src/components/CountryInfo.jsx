@@ -25,14 +25,12 @@ const CountryInfo = () => {
         <img className="flag" src={data.flags.svg} alt="flag"></img>
         <h1 className="name">{data.name.common}</h1>
       </div>
-      <div>
-        <CountryDetails
-          capital={data.capital[0]}
-          languages={Object.values(data.languages)}
-          currencies={Object.values(data.currencies).map(({ name }) => name)}
-          population={data.population}
-        />
-      </div>
+      <CountryDetails
+        capital={data.capital[0]}
+        languages={Object.values(data.languages)}
+        currencies={Object.values(data.currencies).map(({ name }) => name)}
+        population={data.population}
+      />
     </div>
   );
 };

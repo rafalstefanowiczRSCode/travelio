@@ -9,6 +9,8 @@ import { memoImage as Image } from "./Image";
 import Portal from "./Portal";
 import Slider from "./Slider";
 import { getUnsplashImages } from "../utils/apiQueries";
+import PlaneLoader from "./PlaneLoader";
+import Error from "./Error";
 
 const UnsplashImages = () => {
   const { country } = useParams();
@@ -16,25 +18,24 @@ const UnsplashImages = () => {
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const [currentImg, setCurrentImg] = useState(null);
 
-  const {
-    fetchNextPage,
-    data,
-    hasNextPage,
-    error,
-    isLoading: isDataLoading,
-  } = useInfiniteQuery({
-    queryKey: ["unsplashImages", country],
-    getNextPageParam: (prevData, data) => {
-      if (prevData.total_pages === data.length) {
-        return null;
-      }
-      return data.length + 1;
-    },
-    queryFn: ({ pageParam }) => getUnsplashImages(country, pageParam),
-  });
+  const { fetchNextPage, data, hasNextPage, error, isError } = useInfiniteQuery(
+    {
+      queryKey: ["unsplashImages", country],
+      getNextPageParam: (prevData, data) => {
+        if (prevData.total_pages === data.length) {
+          return null;
+        }
+        return data.length + 1;
+      },
+      queryFn: ({ pageParam }) => getUnsplashImages(country, pageParam),
+    }
+  );
 
   const images = useMemo(
-    () => data?.pages.flatMap((page) => page.results) || [],
+    () =>
+      data?.pages
+        .filter(({ errors }) => !errors)
+        .flatMap(({ results }) => results) || [],
     [data]
   );
 
@@ -108,6 +109,7 @@ const UnsplashImages = () => {
   const onCloseSliderClick = () => {
     setIsSliderOpen(false);
   };
+
   const mapImages = useMemo(() => {
     return images.map((item, id) => {
       return (
@@ -144,16 +146,34 @@ const UnsplashImages = () => {
     });
   }, [images, isImageLoading, lastBookElementRef, hasNextPage]);
 
-  if (isDataLoading) {
-    return <h1>DATA LOADING</h1>;
-  }
+  const renderError = () => {
+    const rateLimitExceed = !!error?.message.includes("Rate Limit Exceeded");
+    const isApiError = data?.pages[0].errors || isError;
+
+    if (rateLimitExceed) {
+      return <Error message="Rate Limit Exceed" />;
+    }
+
+    if (isApiError) {
+      return <Error message="Unsplash api error" crash />;
+    }
+
+    if (isImageLoading) {
+      return <PlaneLoader />;
+    }
+
+    if (images.length && !hasNextPage) {
+      return <Error message="Last Page" />;
+    }
+  };
+
   return (
     <>
       <div ref={gridRef} className="myImages">
         {mapImages}
       </div>
-      {/* to do */}
-      {isImageLoading && <h1> image loading....</h1>}
+      {renderError()}
+
       {isSliderOpen && (
         <Portal>
           <Slider
@@ -167,9 +187,6 @@ const UnsplashImages = () => {
           />
         </Portal>
       )}
-      {/* to do */}
-      {!hasNextPage && <h1>Last Page</h1>}
-      {/* to do error */}
     </>
   );
 };

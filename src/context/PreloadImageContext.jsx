@@ -20,6 +20,10 @@ const PreloadImageContext = ({ children }) => {
     const key = isRsCode ? "rsCodeImages" : "unsplashImages";
     const queryKey = [key, country];
     const data = queryClient.getQueryData(queryKey);
+    if (!data || data.pages[0].errors) {
+      console.log("Something went wrong with api request.");
+      return;
+    }
 
     data.pages[0].results.forEach((image) => {
       preloadImage(image.urls.regular);
