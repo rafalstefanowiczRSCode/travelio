@@ -15,6 +15,8 @@ import imageDownload from "../utils/imageDownload";
 import generateDescription from "../utils/generateDescription";
 import Portal from "./Portal";
 import Slider from "./Slider";
+import PlaneLoader from "./PlaneLoader";
+import Error from "./Error";
 
 const cloudName = "dduk3mqt0";
 const MyImages = () => {
@@ -24,6 +26,7 @@ const MyImages = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSliderOpen, setIsSliderOpen] = useState(false);
   const [currentImg, setCurrentImg] = useState(null);
+  const [error, setError] = useState(false);
 
   const imagePerPage = 6;
   const images = useMemo(
@@ -53,6 +56,7 @@ const MyImages = () => {
         //to do handle error and loading
       } catch (error) {
         console.error("Error fetching images:", error);
+        setError(true);
       }
     };
     fetchData();
@@ -168,12 +172,15 @@ const MyImages = () => {
   const cldImage =
     currentImg !== null && cld.image(images[currentImg].public_id);
 
+  if (error) {
+    return <Error message="Cloudinary api error" crash />;
+  }
   return (
     <>
       <div ref={gridRef} className="myImages">
         {mapImages}
       </div>
-      {isLoading && <h1>loading....</h1>}
+      {isLoading && <PlaneLoader />}
       {isSliderOpen && (
         <Portal>
           <Slider
