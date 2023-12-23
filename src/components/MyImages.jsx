@@ -18,7 +18,7 @@ import Slider from "./Slider";
 import PlaneLoader from "./PlaneLoader";
 import Error from "./Error";
 
-const cloudName = "dduk3mqt0";
+const cloudName = "daaemtupt";
 const MyImages = () => {
   const { country } = useParams();
   const [data, setData] = useState([]);
@@ -139,7 +139,6 @@ const MyImages = () => {
       images.map((image, id) => {
         const cldImage = cld.image(image.public_id);
         // cldImage.quality("auto").format("auto");
-        // .effect("e_sharpen"); //to do check different effects
         //to do remove styles to separate folder
         return (
           <Image

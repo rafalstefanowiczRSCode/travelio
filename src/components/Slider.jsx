@@ -1,4 +1,4 @@
-import { AdvancedImage } from "@cloudinary/react";
+import { AdvancedImage, placeholder } from "@cloudinary/react";
 import React, { useEffect, useRef } from "react";
 import "../styles/slider.css";
 import { GrLinkPrevious, GrLinkNext, GrClose } from "react-icons/gr";
@@ -108,7 +108,11 @@ const Slider = ({
         buttonRef={nextButtonRef}
       />
       {cldImage ? (
-        <AdvancedImage className="sliderImage" cldImg={cldImage} />
+        <AdvancedImage
+          className="sliderImage"
+          cldImg={cldImage}
+          plugins={[placeholder({ mode: "blur" })]}
+        />
       ) : (
         <img className="sliderImage" src={imgSrc} />
       )}
