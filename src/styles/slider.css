@@ -44,6 +44,7 @@
 .sliderPreviousButton:active {
   left: 16px;
 }
+
 .simulatePreviousButtonActive {
   left: 16px;
 }
@@ -59,4 +60,17 @@
 }
 .simulateNextButtonActive {
   right: 16px;
+}
+
+@media only screen and (max-width: 768px) {
+  .slider {
+    width: 100vw;
+    padding: 20px;
+  }
+
+  .sliderImage {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+  }
 }
