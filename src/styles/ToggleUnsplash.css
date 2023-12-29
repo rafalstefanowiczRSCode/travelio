@@ -27,7 +27,7 @@
 .toggleUnsplash .toggleButton {
   display: block;
   width: 60%;
-  height: 41px;
+  min-height: 41px;
   text-align: center;
   margin: 0px auto;
   padding: 6px 10px;
